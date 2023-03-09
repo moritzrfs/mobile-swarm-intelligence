@@ -1,0 +1,26 @@
+\documentclass[12pt, a4paper]{report}
+
+\usepackage{minted}
+\usepackage{graphicx}
+%\usepackage[german]{babel}
+\usepackage{hyperref}
+
+\graphicspath{{assets/images/}}
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{literature/moritz.bib}
+
+\setminted[python]{tabsize=2, linenos, breakanywhere, breaklines, frame=lines, fontsize=\footnotesize}
+
+\title{Mobile Schwarmintelligenz}
+\date{2023\\ February}
+\author{Jonas Grohe, Steven Hartinger, Moritz Reufsteck \\Duale Hochschule Baden-Württemberg \\ Mannheim}
+
+\begin{document}
+\maketitle
+\chapter{Introduction}
+\input{chapters/introduction}
+\chapter{Konzepte}
+\input{chapters/concepts}
+\printbibliography
+\end{document}
