@@ -1,0 +1,16 @@
+\usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{ {assets/images/} }
+\usepackage{titling}
+\usepackage{tabularx}
+\usepackage{datetime}
+\newdateformat{gerFormat}{\THEDAY. \monthname[\THEMONTH] \THEYEAR}
+\usepackage{minted}
+\usepackage{hyperref}
+\usepackage[german]{babel}
+\graphicspath{{assets/images/}}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{literature/moritz.bib}
+\setminted[python]{tabsize=2, linenos, breakanywhere, breaklines, frame=lines, fontsize=\footnotesize}
+\usepackage{setspace}
+\onehalfspacing % Setze Zeilenabstand auf 1,5-fach

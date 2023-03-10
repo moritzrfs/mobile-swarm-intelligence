@@ -9,7 +9,9 @@
         "**/*.log": true,
         "**/*.out": true,
         "**/*.run.xml": true,
-        "**/*.synctex.gz": true
+        "**/*.synctex.gz": true,
+        "**/*.fdb_latexmk": true,
+        "**/*.fls": true,
     },
     "latex-workshop.latex.tools": [
         {
@@ -57,6 +59,12 @@
         }
     ],
     "latex-workshop.latex.recipes": [
+        {
+            "name": "xelatex",
+            "tools": [
+              "xelatex"
+            ]
+        },
         {
             "name": "xelatex -> biber -> xelatex*2",
             "tools": [
