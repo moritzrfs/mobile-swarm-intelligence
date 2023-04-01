@@ -1,0 +1,18 @@
+Ant-Colony-Optimization
+metaheuristische
+Particle-Swarm-Optimization
+ACO
+PSO
+Ant
+Colony
+Optimization
+Particle
+Swarm
+Optimization
+Numpy
+Scipy
+Package
+AntNet
+waggle-dance
+waggle dance
+Bee-Algorithm
