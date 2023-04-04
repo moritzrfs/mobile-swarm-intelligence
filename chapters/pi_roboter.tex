@@ -53,8 +53,74 @@ Bei der Umsetzung in hybrider Variante handelt es sich um ein gemischtes Vorgehe
 \end{figure}
 
 \section{Auswahlkriterien für das verwendete Vorgehen}
-\section{Hardware}
+Bei der Auswahl von Kriterien für den Vergleich zwischen der reinen Code-basierten Implementierung, der physischen Implementierung und der hybriden Implementierung des Konzepts der mobilen Schwarmintelligenz werden die folgenden Aspekte berücksichtigt:
+\begin{itemize}
+    \item Realitätsnähe: Realitätsnähe im Kontext der Implementierung eines Schwarmverhaltens bezieht sich auf die Fähigkeit der Implementierung, das tatsächliche Verhalten des Schwarmes in der realen Umgebung genau vorherzusagen. Es geht darum, wie nahe die Simulation der realen Umgebung kommt und wie gut die Implementierung die Gegebenheiten und Bedingungen der realen Welt berücksichtigt.
+    \item Komplexität: Komplexität im Kontext der Implementierung sowie einer möglichen physischen Umsetzung bezieht sich auf den Schwierigkeitsgrad der Implementierung des Schwarmintelligenz-Algorithmus sowie der physischen Umsetzung. Hierbei werden die Kriterien Programmieraufwand, zusätzlich benötigte Kenntnisse und die Komplexität der benötigten Hardware berücksichtigt.
+    \item Kosten: die Kategorie Kosten bezieht sich in erster Linie auf eine Implementierung der physischen Variante. Hierbei werden die Kosten für die benötigte Hardware berücksichtigt. Es soll erwähnt werden, dass eine Implementierung mit bereits vorhandenen und durch die Lehrstätte zur Verfügung gestellten Ressourcen durchgeführt werden soll.
+    \item Skalierbarkeit: Skalierbarkeit bezieht sich auf die Fähigkeit der Implementierung, auf größere oder kleinere Umgebungen angepasst zu werden. Das bedeutet, dass die Implementierung in der Lage sein sollte, auf unterschiedliche Schwarmgrößen, räumliche Gegebenheiten, unterschiedliche Sensordaten oder andere Anforderungen anpassbar zu sein.
+    \item Geschwindigkeit: Geschwindigkeit bezieht sich in diesem Zusammenhang auf die Fähigkeit des Algorithmus, Eingabedaten schnell zu verarbeiten und Entscheidungen zu treffen. Eine Implementierung mit hoher Geschwindigkeit kann schnell auf Änderungen in der Umgebung oder auf neue Anforderungen reagieren und somit effektiver arbeiten.
+    \item Visualisierbarkeit: Visualisierbarkeit bezieht sich darauf, wie die Ergebnisse der Implementierung dargestellt und realitätsnah dargestellt werden können. Es soll betrachtet werden, wie gut das Verhalten des Schwarmes in der realen Umgebung simuliert werden kann und wie gut die Ergebnisse der Implementierung dargestellt werden können.
+\end{itemize}
 
+\begin{table}[H]
+    \renewcommand{\arraystretch}{1.2}
+    \caption{Entscheidungsmatrix: verwendetes Konzept}
+    \label{tab:decision-matrix}
+    \begin{tabularx}{\textwidth}{|X|X|X|X|}
+        \hline
+        & \textbf{Code-basiert} & \textbf{Physisch} & \textbf{Hybrid} \\
+        \hline
+        \textbf{Kriterium} & Punkte & Punkte & Punkte \\
+        \hline
+        Realitätsnähe & 1 & 5 & 3 \\
+        \hline
+        Komplexität & 4 & 1 & 3 \\
+        \hline
+        Kosten & 5 & 3 & 4 \\
+        \hline
+        Skalierbarkeit & 4 & 2 & 3 \\
+        \hline
+        Geschwindigkeit & 4 & 2 & 3 \\
+        \hline
+        Visualisierbarkeit & 2 & 5 & 4 \\
+        \hline
+        \rowcolor{gray!50}
+        \textbf{Summe} & 20 & 18 & 20 \\
+        \hline
+    \end{tabularx}
+\end{table}
+
+Die Punkte der einzelnen Kriterien wurden in einer Skala von 1 bis 5 vergeben. Dabei steht 1 für die schlechteste Bewertung und 5 für die beste Bewertung. Die Summe der Punkte der einzelnen Kriterien ergibt die Gesamtpunktzahl für das jeweilige Konzept. Die ermittelten Punkte liegen wie in \autoref{tab:decision-matrix} alle sehr nah beieinander. Während die Umsetzung des Vorhabens in der physischen Variante einen erhöhten Aufwand und gegenüber den anderen Vorgehensweisen mit einer deutlich höheren Komplexität einhergeht, bietet sie gleichzeitig die beste Realitätsnähe. Die Umsetzung in der Code-basierten Variante ist hingegen mit einem geringeren Aufwand verbunden, bietet jedoch die geringste Realitätsnähe. Die Umsetzung in der hybriden Variante bietet eine gute Realitätsnähe und ist mit einem vergleichbaren Aufwand verbunden. Eine Umsetzung in der hybriden Variante wird daher als Basis für die weitere Implementierung des Vorhabens verwendet. 
+
+\section{Hardware}
+In diesem Abschnitt werden die verwendeten Hardware-Komponenten für die Umsetzung der hybriden Variante beschrieben. Es ist zu erwähnen, dass bei der gewählten und verwendeten Hardware vorzugsweise auf Materialien zurückgegriffen wurde, die bereits durch die Lehrstätte zur Verfügung gestellt wurden. Möglicherweise gibt es bessere Alternativen, die zum Zeitpunkt der Umsetzung jedoch nicht zur Verfügung standen. Die verwendeten Hauptkomponenten sind ein Raspberry Pi 3, ein Grove Base HAT und ein Servo Motor und ein eigens dafür konstruiertes und anschließend mit einem 3D-Drucker angefertigtes Gehäuse, das alle Komponente vereint. Die Komponenten sind in \autoref{fig:hardware} dargestellt.
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+      \includegraphics[width=\textwidth]{raspi.png}
+      \caption{Raspberry Pi 3}
+    \end{subfigure}
+    \hspace{1cm}
+    \begin{subfigure}[b]{0.45\textwidth}
+      \includegraphics[width=\textwidth]{base-hat.jpg}
+      \caption{Grove Base HAT \label{fig:base-hat}}
+    \end{subfigure}
+    \vskip\baselineskip
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{servo.jpg}
+        \caption{Servomotor \label{fig:servo}}
+      \end{subfigure}
+      \hspace{1cm}
+      \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{case.png}
+        \caption{Roboter Gehäuse \label{fig:case}}
+      \end{subfigure}
+    \caption{Verwendete Bauteile \label{fig:hardware}}
+\end{figure}
+
+Der Raspberry Pi dient hierbei als Einplatinencomputer, der die Steuerung des Roboters übernimmt. Der Grove Base HAT, in \autoref{fig:base-hat} dargestellt, bietet die Möglichkeit verschiedene Sensoren und Aktoren anzuschließen. Servomotoren, wie in \autoref{fig:servo} dargestellt, dienen hierbei als Antrieb des Roboters. Das Gehäuse, in \autoref{fig:case} dargestellt, vereint alle Komponenten und bietet eine einfache Montage und Demontage der einzelnen Komponenten. Die Wahl des Servomotors ist aufgrund der geringen Größe und der niedrigen benötigten Versorgungsspannung auf ein Modell dieser Bauart gefallen. Außerdem sind diese Art von Servomotoren günstig erhältlich sowie energieeffizient \cite{Sustek2017}. Die Wahl des Grove Base HAT ist aufgrund der einfachen Verwendung und der Möglichkeit, verschiedene Sensoren und Aktoren anzuschließen, auf dieses Modell gefallen. Bei diesem Bauteil handelt es sich um eine Addon Board, das es erlaubt, Bauteile wie Sensoren und Aktoren über einen einfachen Steckverbinder anzuschließen \cite{seeedstudio}.
 \section{Steuerung und Kommunikation}
 
 \section{Umbau des Einplatinencomputers}
