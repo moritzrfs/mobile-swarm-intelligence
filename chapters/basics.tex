@@ -92,6 +92,36 @@ Unbeschäftigte Arbeiterbienen schauen auf dem dance floor nach Wegbeschreibunge
 Im Artificial Bee Colony (ABC) Algorithmus gibt es drei Gruppen an Bienen:
 \begin{enumerate}
   \item Kundschafter (Scout) Bienen: Sie fliegen zufällig auf der Futtersuche umher
-  \item Betrachter Bienen: Sie stehen am dance floor und beobachten die Tänze. Sie suchen sich den besten aus und werden nun zu beschäftigten Bienen
-  \item Beschäftigte Bienen: Sie fliegen zu der von ihr gewählten Futterquelle. Nachdem sie zurückgekehrt sind kommunizieren sie ihre Informationen auf dem dance floor weiter.
+  \item Betrachtende Bienen: Sie stehen am dance floor und beobachten die Tänze. Sie suchen sich den besten aus und werden nun zu beschäftigten Bienen
+  \item Beschäftigte Bienen: Sie fliegen zu der von ihr gewählten Futterquelle. Nachdem sie zurückgekehrt sind kommunizieren sie ihre Informationen auf dem dance floor weiter
 \end{enumerate} 
+
+Die Position einer Futterquelle repräsentiert eine mögliche Lösung des Optimierungsproblems, die Effektivität der Futterquelle die damit verbundene Fitness.
+Der Algorithmus beginnt mit einem zufälligen Pfad von Start zu Ende. Auf diesem befinden sich Breakpoints, z.B. an Stellen wo ein Hindernis getroffen wird.
+Breakpoints sind Stellen an denen sich zwei Geraden treffen. Diese Stellen sind Futterquellen und in ihrer Nähe suchen die jeweiligen Bienen. 
+Es gibt immer so viele beschäftigte Bienen wie Futterquellen bzw Pfade. Jede beschäftigte Biene hat einen festen Pfad, den sie versucht zu optimieren\cite{pham2005bees}. 
+Die betrachtenden Bienen wählen nun einen Pfad abhängig von folgender Wahrscheinlichkeit:\\
+$p_i=\frac{f_i}{\Sigma^N_{n=0}f_n}$
+\begin{itemize}
+  \item $f_i$: Fitness des Pfades
+  \item N: Anzahl aller Pfade
+\end{itemize}
+Die betrachtenden Bienen versuchen nun den so gewählten Pfad zu verbessern. Kundschafter Bienen suchen zufällig nach neuen Pfaden.\\
+Schritte der gründsätzlichen Durchführung des Bienen Algorithmus:
+\begin{enumerate}
+  \item Initialisierung: Ein initialer Pfad wird gewählt, gerade Linie von Start zu Ende, drehen wenn Hindernis gefunden
+  \item Länge des initialen Pfades berechnen
+  \item Jedem Breakpoint wird eine beschäftigte Biene zugewiesen, diese versucht ihn zu verbessern
+  \item Jeder betrachtenden Bienen wird ein Breakpoint zugewiesen,diese versucht sie zu verbessern
+  \item Kundschafter Bienen suchen nach neuen Pfaden
+  \item Kann eine Biene einen Pfad verbessern, wird dieser gespeichert
+  \item Findet eine Kundschafter Biene einen neuen Pfad wird dieser gespeichert
+  \item Wiederholung: Schritt 3-7 wiederholen bis Abbruchkriterium erreicht ist
+\end{enumerate}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.75]{Flow_ABC.png}
+  \caption{Flussdiagramm von ABC}
+  \label{fig:Figure_ABC}
+\end{figure}
