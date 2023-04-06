@@ -41,32 +41,61 @@ PSO teilt viele Merkmale mit genetischen Algorithmen. Beide basieren auf einer z
 
 
 \section{Ameisen Algorithmen}
-Ameisenalgorithmuen sind von der Futtersuche der Ameisen abgeleitet. Jede Ameise scheidet auf ihrem Weg Pheromone aus, welche mit der Zeit verdunsten. 
+Ameisenalgorithmen sind von der Futtersuche der Ameisen abgeleitet. Jede Ameise scheidet auf ihrem Weg Pheromone aus, welche mit der Zeit verdunsten. 
 Folgende Ameisen wählen wahrscheinlicher einen Weg mit größerer Pheromonkonzentration. 
 Existieren nun zwei unterschiedlich lange Wege mit gleicher Pheromonkonzentration, entscheiden sich etwa gleich viele Ameisen für beide Wege. 
 Da die Ameisen auf dem kürzeren Weg in gleicher Zeit allerdings öfter laufen, steigt hier die Konzentration schneller als auf dem längeren Weg. 
 Infolgedessen laufen immer mehr Ameisen den kürzeren Weg und es bildet sich eine Ameisenstraße.\\
 
 Es gibt viele verschiedene Umsetzungen der Ameisenalgorithmen. Der erste Ansatz wurde von Marco Dorigo 1991 vorgestellt\cite{Dorigo1991AntSA} und 1996 nochmal verbessert\cite{484436}.
-Sein Ansatz namens \emph{Ant System} lieferte Grundlagen welche er 1997 in einem neuen System namens \emph{Ant Colony System} weiter verbesserte\cite{585892}.\\
-Schließlich veröffentlichte er in 2006 die \emph{Ant Colony Optimization (ACO)} welche im folgenden vorgestellt wird\cite{4129846} \\
-
+Sein Ansatz namens \emph{Ant System} lieferte Grundlagen welche er 1997 in einem neuen System namens \emph{Ant Colony System} weiter verbesserte\cite{585892}. In 2000 veröffentlicht Stützle Hoos einen weiteren ACO Algorithmus namens \emph{MAX-MIN Ant System (MMAS)} \cite{STUTZLE2000889} \\
+Im Folgenden werden wir erst auf AS eingehen und dann die Unterschiede zu MMAS und ACS erklären.\\
 Jede Ameise bewegt sich von Punkt x zu Punkt y mit folgender Wahrscheinlichkeit:\\
+
 \large$p_{xy}^k=\frac{(T_{xy}^a)(n_{xy}^b)}{\Sigma(T_{xy}^a)(n_{xy}^b) }$
 
 \begin{itemize}
+  \item $p_{xy}$: Wahrscheinlichkeit des Übergangs von x auf y
   \item $T_x_y$: Menge an Pheromonen auf dem Übergang von x nach y 
   \item a: Gewicht des Einflusses von $T_x_y$
-  \item $n_x_y$: Maß wie wünschenswert dieser Übergang ist, wird häufig aus Abstand zum Ziel berechnet
+  \item $n_x_y$: Maß wie wünschenswert dieser Übergang ist
   \item b: Gewicht des Einflusses von $n_x_y$
 \end{itemize}
 
-Nun bewegt sich jeder Agent nach der von ihm berechneten Wahrscheinlichkeit, bis er den Zielzustand erreicht. Dann werden die Pheromone folgendermaßen aktualisiert:\\
-$T_x_y^k=(1-p)T_x_y^k+\Delta T_x_y^k$
+$n_{xy}$ wir berechnet durch:\\
+$n_{xy}=\frac{1}{d_{xy}}$\\
+mit $d_{xy}$ als Abstand zwischen x und y
+
+Nun bewegt sich jeder Agent nach der von ihm berechneten Wahrscheinlichkeit, bis er den Zielzustand erreicht. Außerdem erhält jeder Agent eine taboo Liste der bereits besuchten Zustände, um einen Kreislauf zu verhindern. Dann werden die Pheromone folgendermaßen aktualisiert:\\
+$T_{xy}^k=(1-p)T_x_y^k+$\Delta $T_x_y^k$
 \begin{itemize}
   \item p: Pheromonverdunstung
-  \item \delta $T_x_y$: in diesem Schritt ausgeschüttete Pheromone
+  \item k: Nummer der Ameise
+  \item $\Delta T_x_y^k$: in diesem Schritt ausgeschüttete Pheromone auf dem Schritt von x nach y
 \end{itemize}
+$\Delta T_x_y^k$ berechnet sich nun folgendermaßen:
+
+$\Delta T_x_y^k = \left\{
+\begin{array}{ll}
+\frac{Q}{L_k} & \textrm{wenn Zustand besucht} \\
+0 & \, \textrm{sonst} \\
+\end{array}
+\right. $
+\begin{itemize}
+    \item Q: Konstanter Wert, wieviel Pheromone ein Agent ausgeschüttete
+    \item $L_k$: Länge des Pfades der Ameise
+\end{itemize}
+
+Die Wahl der Pheromonverdunstung p hat einen großen Einfluss auf den Erfolg des Algorithmus. Er bestimmt Erkundung und Ausnutzung der Agenten. Ein zu hoher Wert führt zu zuviel Erkundung und das Verlorengehen von Ameisen. Ein zu niedriger Wert schränkt die Erkundung zusehr ein und der optimale Pfad wird unter Umständen nicht gefunden.\\
+Das MAX-MIN Ant System(MMAS) wurde eingeführt um die Performance des Systems auf großen Daten zu verbessern. Gegenüber AS gibt es zwei große Unterschiede.  Bei MMAS kann nur der beste Agent die Pheromone verändern. Außerdem gibt es einen maximalen sowie einen minimalen Wert für $T_x_y$. $T_{max} und T_{min}$ werden für ein Problem spezifisch empirisch gewählt\cite{socha2002max}. Allerdings gibt es dafür Richtlinine die bei einer guten Wahl helfen kann\cite*{STUTZLE2000889}.\\ $\Delta T_{xy}$ wird berechnet mit $\Delta T_x_y = \left\{
+  \begin{array}{ll}
+  \frac{1}{L_{best}} & \textrm{wenn Zustand besucht} \\
+  0 & \, \textrm{sonst} \\
+  \end{array}
+  \right. $
+$L_{best}$ kann jetzt entweder der beste bisherige Pfad,der beste Pfad aus der letzten Iteration sein oder eine Kombination der beiden.
+
+
 Schritte der grundsätzlichen Durchführung von ACO:
 \begin{enumerate}
   \item Initialisierung: Die Übergänge zwischen Start und Ziel bekommen einen Wert für n zugewiesen
