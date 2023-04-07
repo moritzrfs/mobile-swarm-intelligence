@@ -121,6 +121,47 @@ In diesem Abschnitt werden die verwendeten Hardware-Komponenten für die Umsetzu
 \end{figure}
 
 Der Raspberry Pi dient hierbei als Einplatinencomputer, der die Steuerung des Roboters übernimmt. Der Grove Base HAT, in \autoref{fig:base-hat} dargestellt, bietet die Möglichkeit verschiedene Sensoren und Aktoren anzuschließen. Servomotoren, wie in \autoref{fig:servo} dargestellt, dienen hierbei als Antrieb des Roboters. Das Gehäuse, in \autoref{fig:case} dargestellt, vereint alle Komponenten und bietet eine einfache Montage und Demontage der einzelnen Komponenten. Die Wahl des Servomotors ist aufgrund der geringen Größe und der niedrigen benötigten Versorgungsspannung auf ein Modell dieser Bauart gefallen. Außerdem sind diese Art von Servomotoren günstig erhältlich sowie energieeffizient \cite{Sustek2017}. Die Wahl des Grove Base HAT ist aufgrund der einfachen Verwendung und der Möglichkeit, verschiedene Sensoren und Aktoren anzuschließen, auf dieses Modell gefallen. Bei diesem Bauteil handelt es sich um eine Addon Board, das es erlaubt, Bauteile wie Sensoren und Aktoren über einen einfachen Steckverbinder anzuschließen \cite{seeedstudio}.
-\section{Steuerung und Kommunikation}
 
+
+\section{Steuerung und Kommunikation}
+Für die Kommunikation des Roboters stehen verschiedene Übertragungs- und Kommunikationsmöglichkeiten zur Verfügung. Aufgrund der Anforderung, dass das Gerät mobil betrieben werden soll, eignet sich eine kabellose Variante.
+
+Vergleichen werden hierfür die Möglichkeiten MQTT, REST API und Web Socket. Für den Anwendungsfall relevant sind die folgenden Eigenschaften:
+\begin{itemize}
+  \item Einfache Implementierung
+  \item Keine zusätzliche Hardware notwendig
+  \item Flexibilität
+  \item Skalierbarkeit
+  \item Zuverlässigkeit
+\end{itemize}
+
+Während sich Kriterien für den EInsatz von Robotik hauptsächlich auf eine hohe Zuverlässigkeit, geringe Latenzen sowie eine hohe Flexibilität beziehen \cite{AMARAN2015400}, werden im Ramen dieser studentischen Arbeit andere Kriterien als relevant angesehen, mit unter, weil diese für die Umsetzung des Vorhabens eine Erleichterung mit sich bringen. So ist die Einfache Implementierung ein wichtiges Kriterium, da die Umsetzung in einer begrenzten Zeit erfolgen soll. Die zu verwendende Hardware soll sich wenn möglich auf bereits vorhandene Komponenten beschränken. Flexibilität ist insofern relevant, da bei der Umsetzung des Vorhabens eine hohe Anpassungsfähigkeit an die Umgebung gewünscht ist. Wenn Änderungen notwendig werden, soll diese möglichst einfach umsetzbar sein, ohne dass die gesamte Umsetzung neu durchgeführt werden muss. Skalierbarkeit soll insofern möglich sein, dass das System bei einer Erweiterung der Anzahl Geräten, auf das es verteilt wird, in gleicher Weise funktionieren soll. Zuverlässigkeit ist ein wichtiges Kriterium, da die Kommunikation zwischen den einzelnen Geräten nicht unterbrochen werden darf.
+
+\begin{table}[H]
+  \renewcommand{\arraystretch}{1.2}
+  \caption{Entscheidungsmatrix: Verwendete Kommunikationsprotokolle}
+  \label{tab:decision-matrix-communication}
+  \begin{tabularx}{\textwidth}{|X|X|X|X|}
+      \hline
+      & \textbf{Code-basiert} & \textbf{Physisch} & \textbf{Hybrid} \\
+      \hline
+      \textbf{Kriterium} & Punkte & Punkte & Punkte \\
+      \hline
+      Realitätsnähe & 1 & 5 & 3 \\
+      \hline
+      Komplexität & 4 & 1 & 3 \\
+      \hline
+      Kosten & 5 & 3 & 4 \\
+      \hline
+      Skalierbarkeit & 4 & 2 & 3 \\
+      \hline
+      Geschwindigkeit & 4 & 2 & 3 \\
+      \hline
+      Visualisierbarkeit & 2 & 5 & 4 \\
+      \hline
+      \rowcolor{gray!50}
+      \textbf{Summe} & 20 & 18 & 20 \\
+      \hline
+  \end{tabularx}
+\end{table}
 \section{Umbau des Einplatinencomputers}
