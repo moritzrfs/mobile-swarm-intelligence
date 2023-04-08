@@ -135,33 +135,34 @@ Vergleichen werden hierfür die Möglichkeiten MQTT, REST API und Web Socket. F�
   \item Zuverlässigkeit
 \end{itemize}
 
-Während sich Kriterien für den EInsatz von Robotik hauptsächlich auf eine hohe Zuverlässigkeit, geringe Latenzen sowie eine hohe Flexibilität beziehen \cite{AMARAN2015400}, werden im Ramen dieser studentischen Arbeit andere Kriterien als relevant angesehen, mit unter, weil diese für die Umsetzung des Vorhabens eine Erleichterung mit sich bringen. So ist die Einfache Implementierung ein wichtiges Kriterium, da die Umsetzung in einer begrenzten Zeit erfolgen soll. Die zu verwendende Hardware soll sich wenn möglich auf bereits vorhandene Komponenten beschränken. Flexibilität ist insofern relevant, da bei der Umsetzung des Vorhabens eine hohe Anpassungsfähigkeit an die Umgebung gewünscht ist. Wenn Änderungen notwendig werden, soll diese möglichst einfach umsetzbar sein, ohne dass die gesamte Umsetzung neu durchgeführt werden muss. Skalierbarkeit soll insofern möglich sein, dass das System bei einer Erweiterung der Anzahl Geräten, auf das es verteilt wird, in gleicher Weise funktionieren soll. Zuverlässigkeit ist ein wichtiges Kriterium, da die Kommunikation zwischen den einzelnen Geräten nicht unterbrochen werden darf.
-
+Während sich Kriterien für den Einsatz von Robotik hauptsächlich auf eine hohe Zuverlässigkeit, geringe Latenzen sowie eine hohe Flexibilität beziehen \cite{AMARAN2015400}, werden im Rahmen dieser studentischen Arbeit andere Kriterien als relevant angesehen, mit unter, weil diese für die Umsetzung des Vorhabens eine Erleichterung mit sich bringen. So ist die einfache Implementierung ein wichtiges Kriterium, da die Umsetzung in einer begrenzten Zeit erfolgen soll. Die zu verwendende Hardware soll sich, wenn möglich auf bereits vorhandene Komponenten beschränken. Flexibilität ist insofern relevant, als bei der Umsetzung des Vorhabens eine hohe Anpassungsfähigkeit an die Umgebung gewünscht ist. Wenn Änderungen notwendig werden, soll diese möglichst einfach umsetzbar sein, ohne dass die gesamte Umsetzung neu durchgeführt werden muss. Skalierbarkeit soll möglich sein, sodass das System bei einer Erweiterung der Anzahl Geräten, auf das es verteilt wird, in gleicher Weise funktionieren soll. Zuverlässigkeit ist ein wichtiges Kriterium, da die Kommunikation zwischen den einzelnen Geräten nicht unterbrochen werden darf.
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.2}
   \caption{Entscheidungsmatrix: Verwendete Kommunikationsprotokolle}
   \label{tab:decision-matrix-communication}
   \begin{tabularx}{\textwidth}{|X|X|X|X|}
       \hline
-      & \textbf{Code-basiert} & \textbf{Physisch} & \textbf{Hybrid} \\
+      & \textbf{MQTT} & \textbf{REST API} & \textbf{Web Socket} \\
       \hline
       \textbf{Kriterium} & Punkte & Punkte & Punkte \\
       \hline
-      Realitätsnähe & 1 & 5 & 3 \\
+      Einfache Implementierung & 2 & 4 & 3 \\
       \hline
-      Komplexität & 4 & 1 & 3 \\
+      Keine zusätzliche Hardware & 1 & 5 & 5 \\
       \hline
-      Kosten & 5 & 3 & 4 \\
+      Flexibilität & 5 & 3 & 4 \\
       \hline
-      Skalierbarkeit & 4 & 2 & 3 \\
+      Skalierbarkeit & 4 & 4 & 4 \\
       \hline
-      Geschwindigkeit & 4 & 2 & 3 \\
-      \hline
-      Visualisierbarkeit & 2 & 5 & 4 \\
+      Zuverlässigkeit & 5 & 4 & 4 \\
       \hline
       \rowcolor{gray!50}
-      \textbf{Summe} & 20 & 18 & 20 \\
+      \textbf{Summe} & 17 & 20 & 20 \\
       \hline
   \end{tabularx}
 \end{table}
+
+Die Punkte der einzelnen Kriterien wurden in einer Skala von 1 bis 5
+vergeben. Dabei steht 1 für die schlechteste Bewertung und 5 für die beste Bewertung. Die Summe der Punkte der einzelnen Kriterien ergibt die Gesamtpunktzahl für die jeweilige Technologie.
+Obwohl i den Bereichen Robotik und IoT häufig MQTT verwendet wird \cite{AMARAN2015400}, wird es für diese studentische Arbeit nicht in Betracht gezogen. Nicht zuletzt, weil keine Vorkenntnisse der bearbeitenden vorhanden sind.  
 \section{Umbau des Einplatinencomputers}
