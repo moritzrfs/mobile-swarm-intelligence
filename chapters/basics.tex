@@ -1,12 +1,12 @@
 \section{Partikelschwarmoptimierung}
-Die Partikelschwarmoptimierung/particle swarm optimization (PSO) wurde zuerst von Dr. Kennedy und Dr. Eberhart in 1995 vorgestellt.
+Die Partikelschwarmoptimierung/particle swarm optimization (PSO) wurde zuerst von Dr. Kennedy und Dr. Eberhart in 1995 vorgestellt\cite{kennedy1942particle}.
  Sie ist inspiriert vom Verhalten von Vogelschwärmen und Fischschulen. Jeder Teil wird als Partikel bezeichnet, die Gesamtheit als Schwarm.
 \\ Die Partikel werden gleichverteilt über dem Suchbereich verteilt. Sie erhalten eine zufällige Startgeschwindigkeit. 
 Der Suchraum hat \textbf{D} Dimensionen und \textbf{N} ist die Menge an Partikeln. Nun hat das \textbf{i}-te Partikel die Position X\textsubscript{i}=(x\textsubscript{i1},x\textsubscript{i2},x\textsubscript{i3},... ...,x\textsubscript{iD})
   und die Geschwindigkeit V\textsubscript{i}(v\textsubscript{i1},v\textsubscript{i2},v\textsubscript{i3},... ...,v\textsubscript{iD}). Außerdem speichert jedes Partikel seine beste Position P\textsubscript{ibest} und erhält die insgesamt beste Position P\textsubscript{gbest}. 
 \\
-Jedes Partikel updated seine Position nach den folgenden Gleichungen:\\
-V\textsubscript{i}\textsuperscript{K+1}=wV\textsubscript{i}\textsuperscript{K}+c\textsubscript{1}r\textsubscript{1}(P\textsubscript{ibest}-X\textsubscript{i}\textsuperscript{K})+c\textsubscript{2}r\textsubscript{2}(P\textsubscript{gbest}-X\textsubscript{i}\textsuperscript{K})\\
+Jedes Partikel updated seine Position nach den folgenden Gleichungen:\\\\
+\large V\textsubscript{i}\textsuperscript{K+1}=wV\textsubscript{i}\textsuperscript{K}+c\textsubscript{1}r\textsubscript{1}(P\textsubscript{ibest}-X\textsubscript{i}\textsuperscript{K})+c\textsubscript{2}r\textsubscript{2}(P\textsubscript{gbest}-X\textsubscript{i}\textsuperscript{K})\\\\\normalsize
 $X_i^{K+1}=X_i^K+V_i^{K+1}$
 \begin{itemize}
 
@@ -25,10 +25,12 @@ Schritte der gründsätzlichen Durchführung der Partikelschwarmoptimierung:
   \item Wiederholung: Schritt 2 bis 4 werden nun bis Erreichen des Abbruchkriteriums wiederholt
 \end{enumerate}\\
 
-Hier gibt es nun noch verschieden Einflüsse auf die Umsetzung der Partikelschwarmoptimierung.
+Hier gibt es nun noch verschieden Einflüsse auf die Umsetzung der Partikelschwarmoptimierung.\\
 Das Abbruchkriterium kann unterschiedlich gewählt werden. Standardmäßig werden hier entweder die Anzahl der Iterationen im Vorhinein festgelegt oder der Algorithmus endet nach einer zu geringen Änderung nach mehreren Iterationen. 
-Um die Konvergenz zu beschleunigen kann der $P_{ibest}$-Wert anstatt des persönlich besten Wertes den besten Wert eines bestimmten Umfelds speichern.
+Um die Konvergenz zu beschleunigen, kann der $P_{ibest}$-Wert anstatt des persönlich besten Wertes den besten Wert eines bestimmten Umfelds speichern.
 Der Wahl der Fitnessevaluierung muss hier ein großer Wert zukommen. Eine gut gewählte Fitnessfunktion kann die Konvergenz stark beschleunigen und somit den benötigten Rechenaufwand minimieren.\\
+PSO ist einfach zu implementieren und hat nur wenige Parameter die gesetzt werden müssen. Es braucht keine skalierten Daten und ist einfach zu parallelisieren \cite{poli2007particle}.
+Eine Umsetzung mit einem großen kognitiven Gewicht $c_1$ führt zu einer ausgiebigen Exploration, während ein großes soziales Gewicht $c_2$ zu einer schnellen Konvergenz führt. Daher können diese Parameter dynamisch gewählt werden, um anfangs den gesamten Suchraum zu erforschen und später trotzdem schnell zu konvergieren \cite{suganthan1999particle}. 
 PSO teilt viele Merkmale mit genetischen Algorithmen. Beide basieren auf einer zufälligen Initialisierung ihrer Agenten und entwickeln diese Anhand einer Fitnessevaluierung weiter. Allerdings erfolgt der Informationsaustausch grundlegend unterschiedlich. Während bei einem genetischen Algorithmus alle Agenten untereinander Informationen austauschen, erfolgt dies bei einer PSO nur in eine Richtung, vom besten Partikel zu allen anderen.\\
 
 
@@ -48,12 +50,12 @@ Da die Ameisen auf dem kürzeren Weg in gleicher Zeit allerdings öfter laufen, 
 Infolgedessen laufen immer mehr Ameisen den kürzeren Weg und es bildet sich eine Ameisenstraße.\\
 
 Es gibt viele verschiedene Umsetzungen der Ameisenalgorithmen. Der erste Ansatz wurde von Marco Dorigo 1991 vorgestellt\cite{Dorigo1991AntSA} und 1996 nochmal verbessert\cite{484436}.
-Sein Ansatz namens \emph{Ant System} lieferte Grundlagen welche er 1997 in einem neuen System namens \emph{Ant Colony System} weiter verbesserte\cite{585892}. In 2000 veröffentlicht Stützle Hoos einen weiteren ACO Algorithmus namens \emph{MAX-MIN Ant System (MMAS)} \cite{STUTZLE2000889} \\
+Sein Ansatz namens \emph{Ant System} lieferte Grundlagen welche er 1997 in einem neuen System namens \emph{Ant Colony System} weiter verbesserte\cite{585892}. In 2000 veröffentlicht Stützle Hoos einen weiteren ACO Algorithmus namens \emph{MAX-MIN Ant System (MMAS)} \cite{STUTZLE2000889}. Es exisitieren noch einige weiter ACO Algortihmen, wie das best-worst Ant System (BWAS)\cite{cordon2000new} oder das Hyper-Cube Ant System. Diese sind allerdings nicht so verbreitet und werden daher im Folgenden nicht weiter behandelt.\cite{blum2004hyper}   \\
 Im Folgenden werden wir erst auf AS eingehen und dann die Unterschiede zu MMAS und ACS erklären.\\
 Jede Ameise bewegt sich von Punkt x zu Punkt y mit folgender Wahrscheinlichkeit:\\
 
 \large$p_{xy}^k=\frac{(T_{xy}^a)(n_{xy}^b)}{\Sigma(T_{xy}^a)(n_{xy}^b) }$
-
+\normalsize
 \begin{itemize}
   \item $p_{xy}$: Wahrscheinlichkeit des Übergangs von x auf y
   \item $T_x_y$: Menge an Pheromonen auf dem Übergang von x nach y 
@@ -61,40 +63,63 @@ Jede Ameise bewegt sich von Punkt x zu Punkt y mit folgender Wahrscheinlichkeit:
   \item $n_x_y$: Maß wie wünschenswert dieser Übergang ist
   \item b: Gewicht des Einflusses von $n_x_y$
 \end{itemize}
+\\
+$n_{xy}$ wir berechnet durch:\\\large
+$n_{xy}=\frac{1}{d_{xy}}$\\\normalsize
+mit $d_{xy}$ als Abstand zwischen x und y.\\
 
-$n_{xy}$ wir berechnet durch:\\
-$n_{xy}=\frac{1}{d_{xy}}$\\
-mit $d_{xy}$ als Abstand zwischen x und y
-
-Nun bewegt sich jeder Agent nach der von ihm berechneten Wahrscheinlichkeit, bis er den Zielzustand erreicht. Außerdem erhält jeder Agent eine taboo Liste der bereits besuchten Zustände, um einen Kreislauf zu verhindern. Dann werden die Pheromone folgendermaßen aktualisiert:\\
-$T_{xy}^k=(1-p)T_x_y^k+$\Delta $T_x_y^k$
+Nun bewegt sich jeder Agent nach der von ihm berechneten Wahrscheinlichkeit, bis er den Zielzustand erreicht. Außerdem erhält jeder Agent eine taboo Liste der bereits besuchten Zustände, um einen Kreislauf zu verhindern. Dann werden die Pheromone folgendermaßen aktualisiert:\\\large
+$T_{xy}^k=(1-p)T_x_y^k+\Delta T_x_y^k$\normalsize
 \begin{itemize}
   \item p: Pheromonverdunstung
   \item k: Nummer der Ameise
   \item $\Delta T_x_y^k$: in diesem Schritt ausgeschüttete Pheromone auf dem Schritt von x nach y
 \end{itemize}
-$\Delta T_x_y^k$ berechnet sich nun folgendermaßen:
-
+$\Delta T_x_y^k$ berechnet sich nun folgendermaßen:\\
+\large
 $\Delta T_x_y^k = \left\{
 \begin{array}{ll}
 \frac{Q}{L_k} & \textrm{wenn Zustand besucht} \\
 0 & \, \textrm{sonst} \\
 \end{array}
 \right. $
+\normalsize
 \begin{itemize}
-    \item Q: Konstanter Wert, wieviel Pheromone ein Agent ausgeschüttete
+    \item Q: Konstanter Wert, wieviel Pheromone ein Agent ausschüttete
     \item $L_k$: Länge des Pfades der Ameise
 \end{itemize}
 
 Die Wahl der Pheromonverdunstung p hat einen großen Einfluss auf den Erfolg des Algorithmus. Er bestimmt Erkundung und Ausnutzung der Agenten. Ein zu hoher Wert führt zu zuviel Erkundung und das Verlorengehen von Ameisen. Ein zu niedriger Wert schränkt die Erkundung zusehr ein und der optimale Pfad wird unter Umständen nicht gefunden.\\
-Das MAX-MIN Ant System(MMAS) wurde eingeführt um die Performance des Systems auf großen Daten zu verbessern. Gegenüber AS gibt es zwei große Unterschiede.  Bei MMAS kann nur der beste Agent die Pheromone verändern. Außerdem gibt es einen maximalen sowie einen minimalen Wert für $T_x_y$. $T_{max} und T_{min}$ werden für ein Problem spezifisch empirisch gewählt\cite{socha2002max}. Allerdings gibt es dafür Richtlinine die bei einer guten Wahl helfen kann\cite*{STUTZLE2000889}.\\ $\Delta T_{xy}$ wird berechnet mit $\Delta T_x_y = \left\{
+Das MAX-MIN Ant System(MMAS) wurde eingeführt um die Performance des Systems auf großen Daten zu verbessern. Gegenüber AS gibt es zwei große Unterschiede. Es gibt es einen maximalen sowie einen minimalen Wert für die Pheromonkonzentration auf einem Übergang, $T_x_y$. Die minimal und maximal Werte $T_{min}$ und $T_{max}$ werden für ein Problem spezifisch empirisch gewählt\cite{socha2002max}. Allerdings gibt es dafür Richtlinine die bei einer guten Wahl helfen kann\cite*{STUTZLE2000889}.\\
+Bei MMAS kann außerdem nur der beste Agent die Pheromone verändern.\\
+$\Delta T_{xy}$ wird berechnet mit:\\
+\large
+$\Delta T_{xy}  = \left\{
   \begin{array}{ll}
-  \frac{1}{L_{best}} & \textrm{wenn Zustand besucht} \\
+  \frac{1}{L_{best}} & \textrm{wenn Übergang benutzt} \\
   0 & \, \textrm{sonst} \\
   \end{array}
   \right. $
-$L_{best}$ kann jetzt entweder der beste bisherige Pfad,der beste Pfad aus der letzten Iteration sein oder eine Kombination der beiden.
-
+  \normalsize\\
+$L_{best}$ kann jetzt entweder der beste bisherige Pfad,der beste Pfad aus der letzten Iteration sein oder eine Kombination der beiden.\\
+Ant Colony System (ACS) bringt mehrere kleinere Verbesserungen mit sich. Die wichtigste Veränderung ist die Erweiterung des Pheromonupdates. Diese wird nun in zwei Schritten vorgenommen. Der erste Schritt ist das lokale Pheromonupdate. Jeder Agent aktualisiert nach jedem Schritt die Pheromone auf seinem letzten Übergang mit folgender Gleichung:\\
+\large
+$T_{xy}=(1-\varphi)\cdot T_{xy}+\varphi\cdot T_0$\\
+\normalsize
+\begin{itemize}
+  \item $\varphi$: Pheromon-Verdunstungskoeefizient, Wert zwischen 0 und 1
+  \item $T_0$: Initialer Wert des Pheromons
+\end{itemize}
+Das Ziel des lokalen Updates ist die Erweiterung der Suche in einer Iteration. Durch das Vermindern der Konzentration an bereits besuchten Übergängen werden folgende Agenten begünstigt, andere Übergänge zu wählen und somit andere Lösung zu erzeugen. Dies vermindert die Überlagerung von gleichen Lösungen, welche aufgrund der Updates nur mit den besten Lösungen unerwünscht wird\cite{dorigo1997ant}. Die zweite Updateregel, das Offline Pheromon Update wird wie bei MMAS mit dem besten Pfad insgesamt oder dem besten Pfad der Iteration durchgeführt. Die Formel ist nur leicht abgeändert:\\\\
+\large
+$T_{xy}  = \left\{
+  \begin{array}{ll}
+  $(1-p)\cdot T_{xy}+p\cdot \Delta T_{xy}$ & \textrm{wenn Übergang auf dem besten Pfad} \\
+  $T_x_y$ & \, \textrm{sonst} \\
+  \end{array}
+\right. $
+\normalsize\\
+Ein weiterer Unterschied ist die Nutzung einer pseudorandomisierten Auswahl. Ist die Wahrscheinlichkeit einen Pfad zu wählen über einem gewählten Schwellwert, so wird der Agent definitiv diesen Pfad wählen. Durch die Abnutzung der besuchten Pfade kann dies nun genutzt werden, um die Suche zielgerichteter zu gestalten, ohne die anderen Pfade komplett auszuschließen\cite{gambardella1996solving}.\\
 
 Schritte der grundsätzlichen Durchführung von ACO:
 \begin{enumerate}
@@ -129,8 +154,10 @@ Die Position einer Futterquelle repräsentiert eine mögliche Lösung des Optimi
 Der Algorithmus beginnt mit einem zufälligen Pfad von Start zu Ende. Auf diesem befinden sich Breakpoints, z.B. an Stellen wo ein Hindernis getroffen wird.
 Breakpoints sind Stellen an denen sich zwei Geraden treffen. Diese Stellen sind Futterquellen und in ihrer Nähe suchen die jeweiligen Bienen. 
 Es gibt immer so viele beschäftigte Bienen wie Futterquellen bzw Pfade. Jede beschäftigte Biene hat einen festen Pfad, den sie versucht zu optimieren\cite{pham2005bees}. 
-Die betrachtenden Bienen wählen nun einen Pfad abhängig von folgender Wahrscheinlichkeit:\\
+Die betrachtenden Bienen wählen nun einen Pfad abhängig von folgender Wahrscheinlichkeit:\\\\
+\large
 $p_i=\frac{f_i}{\Sigma^N_{n=0}f_n}$
+\normalsize
 \begin{itemize}
   \item $f_i$: Fitness des Pfades
   \item N: Anzahl aller Pfade

@@ -1,22 +1,27 @@
+\section*{Vor-und Nachteile von Schwarmalgorithmen}
+
+
+
+
 Nachdem wir oben die drei Algorithmen Particel Swarm Optimization(PSO), Ant Colony Optimization(ACO) und  Artificial Bee Colony (ABC) vorgestellt haben, werden wir sie im folgenden zuerst generell und dann spezifisch für unseren Anwendungsfall vergleichen\\
 
-\section*{Allgemeiner Vergleich}
+\section{Vergleich der Schwarmalgorithmen}
 
-\subsection*{Kommunikation}
+\subsection{Kommunikation}
 Die einzelnen Agenten der Algorithmen kommunizieren auf unterschiedliche Arten. Bei den Partikeln kommuniziert nur das allgemein oder lokal beste Partikel mit den andern. 
-Die Ameisen-Agenten kommunizieren nur indirekt über die von ihnen hinterlassenen Pheromone. Bei den Bienen-Agenten funktioniert die Kommunikation sehr viel direkter.
+Die Ameisen-Agenten kommunizieren über so gennante Stigmergie. Das heißt, sie kommunizieren nicht dirket, sondern indirekt über die Modifikation ihrer Umwelt. Bei Ameisen funktioniert das über die hinterlassenen Pheromone.Bei den Bienen-Agenten funktioniert die Kommunikation sehr viel direkter.
 Sie führen ihren waggle dance aus und kommunizieren damit die Wegbeschreibung sowie die Effektivität der Lösung und vergleichen diese untereinander.
 
-\subsection*{Ausgabe}
+\subsection{Ausgabe}
 Die Daten werden bei der PSO als beste lokale oder globale Position der Partikel gespeichert. Diese Position repräsentiert die beste gefundene Lösung für das Problem.
 Bei der ACO ist die Ausgabe in den verschiedenen Pheromonkonzentrationen auf den Pfaden. Der Pfad mit der höchsten Konzentration ist die beste gefundene Lösung.
 Bei der Artificial Bee Colony ist die Lösung indirekt im Tanz der Bienen enthalten. Die effektivste, gefundene Lösung wird von der Biene repräsentiert, welche den attraktivsten Tanz hat.
 
-\subsection*{Anwendungsgebiet}
+\subsection{Anwendungsgebiet}
 Die Algorithmen sind aufgrund ihres Aufbaus jeweils für unterschiedliche Anwendungsgebiete besonders gut geeignet. Allerdings, können die meisten Probleme in andere Gebiete überführt werden, womit auch andere Algorithmen auf sie überführbar sind.\\
-Partikel Schwarm Optimierung ist am besten für Funktionsoptimierung geeignet. Es findet effektiv lokale und globale Maxima.
-Die Ant Colony Optimization ist gut für das Traveling Salesman Problem sowie das Vehicle Routing Problem geeignet. Gerade bei kleineren Problemen kann es schnell eine Lösung liefern\cite{sabet2016comparison}.
-Die Artificial Bee Colony ist gut für das Trainieren eines neuronalen Netzes geeignet. Für ein großes Traveling Salesman Problem schlägt es die anderen in Performance\cite{sabet2016comparison}.
+Partikel Schwarm Optimierung ist am besten für Funktionsoptimierung geeignet. Auch bei irregularen Probleme, welche sich verändern können, kann PSO verlässlich funktionieren.  
+Die Ant Colony Optimization ist besonders gut für Routing Probleme wie das Traveling Salesman Problem \cite{stutzle1997max} oder das Vehicle Routing Problem\cite{gambardella1999macs}. Gerade bei kleineren Problemen kann es schnell eine Lösung liefern\cite{sabet2016comparison}.
+Die Artificial Bee Colony ist gut für das Trainieren eines neuronalen Netzes geeignet. Für ein großes Traveling Salesman Problem schlägt es die anderen beiden in Performance\cite{sabet2016comparison}.
 
 
 
