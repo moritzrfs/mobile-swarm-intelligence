@@ -21,6 +21,9 @@ def obstacles():
   
     return obs
 \end{minted}
+\vspace*{-3mm}
+\captionof{listing}{\label{lst:marix-gen}Matrizen Generierung}
+\vspace*{3mm}
 
 Die Abbildung, die mit dem Python Package `matplotlib` erstellt wurde, visualisiert eine Matrix, die durch die in Listing XY dargestellte Funktion erstellt wurde. Der Startpunkt ist bei den Koordinaten (0/0) als grüner Punkt angezeigt. Das Ziel am Punkt (20/20) als roter Punkt. Die weiße Fläche stellt den freien und somit durchquerbaren Bereich und die schwarzen Flächen den durch Hindernisse blockierten dar. Diese Daten sind die Ausgangslage für einen darauf angewandten Schwarmintelligenz Algorithmus dar, dessen Output den bestmöglichen Pfad durch diese Fläche ermitteln soll siehe \autoref{fig:Figure_1}.
 \begin{figure}[H]
@@ -60,7 +63,7 @@ Bei der Auswahl von Kriterien für den Vergleich zwischen der reinen Code-basier
     \item Kosten: die Kategorie Kosten bezieht sich in erster Linie auf eine Implementierung der physischen Variante. Hierbei werden die Kosten für die benötigte Hardware berücksichtigt. Es soll erwähnt werden, dass eine Implementierung mit bereits vorhandenen und durch die Lehrstätte zur Verfügung gestellten Ressourcen durchgeführt werden soll.
     \item Skalierbarkeit: Skalierbarkeit bezieht sich auf die Fähigkeit der Implementierung, auf größere oder kleinere Umgebungen angepasst zu werden. Das bedeutet, dass die Implementierung in der Lage sein sollte, auf unterschiedliche Schwarmgrößen, räumliche Gegebenheiten, unterschiedliche Sensordaten oder andere Anforderungen anpassbar zu sein.
     \item Geschwindigkeit: Geschwindigkeit bezieht sich in diesem Zusammenhang auf die Fähigkeit des Algorithmus, Eingabedaten schnell zu verarbeiten und Entscheidungen zu treffen. Eine Implementierung mit hoher Geschwindigkeit kann schnell auf Änderungen in der Umgebung oder auf neue Anforderungen reagieren und somit effektiver arbeiten.
-    \item Visualisierbarkeit: Visualisierbarkeit bezieht sich darauf, wie die Ergebnisse der Implementierung dargestellt und realitätsnah dargestellt werden können. Es soll betrachtet werden, wie gut das Verhalten des Schwarmes in der realen Umgebung simuliert werden kann und wie gut die Ergebnisse der Implementierung dargestellt werden können.
+    \item Visualisierung: Visualisierung bezieht sich darauf, wie die Ergebnisse der Implementierung dargestellt und realitätsnah dargestellt werden können. Es soll betrachtet werden, wie gut das Verhalten des Schwarmes in der realen Umgebung simuliert werden kann und wie gut die Ergebnisse der Implementierung dargestellt werden können.
 \end{itemize}
 
 \begin{table}[H]
@@ -100,17 +103,17 @@ In diesem Abschnitt werden die verwendeten Hardware-Komponenten für die Umsetzu
     \centering
     \begin{subfigure}[b]{0.45\textwidth}
       \includegraphics[width=\textwidth]{raspi.png}
-      \caption{Raspberry Pi 3}
+      \caption{Raspberry Pi 3 \cite{raspberry-pi}}
     \end{subfigure}
     \hspace{1cm}
     \begin{subfigure}[b]{0.45\textwidth}
       \includegraphics[width=\textwidth]{base-hat.jpg}
-      \caption{Grove Base HAT \label{fig:base-hat}}
+      \caption{Grove Base HAT \cite{seeedstudio} \label{fig:base-hat}}
     \end{subfigure}
     \vskip\baselineskip
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{servo.jpg}
-        \caption{Servomotor \label{fig:servo}}
+        \caption{Servomotor \cite{addicore_fs90r_micro_servo} \label{fig:servo}}
       \end{subfigure}
       \hspace{1cm}
       \begin{subfigure}[b]{0.45\textwidth}
@@ -164,14 +167,44 @@ Während sich Kriterien für den Einsatz von Robotik hauptsächlich auf eine hoh
 
 Die Punkte der einzelnen Kriterien wurden in einer Skala von 1 bis 5
 vergeben. Dabei steht 1 für die schlechteste Bewertung und 5 für die beste Bewertung. Die Summe der Punkte der einzelnen Kriterien ergibt die Gesamtpunktzahl für die jeweilige Technologie.
-Obwohl i den Bereichen Robotik und IoT häufig MQTT verwendet wird \cite{AMARAN2015400}, wird es für diese studentische Arbeit nicht in Betracht gezogen. Nicht zuletzt, weil keine Vorkenntnisse der bearbeitenden vorhanden sind.
+Obwohl in den Bereichen Robotik und IoT häufig MQTT verwendet wird \cite{AMARAN2015400}, wird es für diese studentische Arbeit nicht in Betracht gezogen. Nicht zuletzt, weil keine Vorkenntnisse der bearbeitenden vorhanden sind.
 
 \subsection{REST API}
+Unter Einbeziehung der in \autoref{tab:decision-matrix-communication} aufgezeigten Ergebnisse der Entscheidungsfindung für eine geeignete Möglichkeit der Kommunikation mit dem verwendeten Raspberry Pi Einplatinencomputer, fällt die Wahl für die Implementierung einer REST API Schnittstelle auf die in Python zu implementierende Lösung \textit{FastAPI} \cite{tiangolo_fastapi_features}. In \autoref{fig:apidocs} werden die für das Vorhaben benötigten API-Endpunkte in Form einer durch die Umsetzung automatisch generierten API-Dokumentation aufgezeigt.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{api-docs.png}
   \caption{API Docs}
-  \label{fig:mqtt}
+  \label{fig:apidocs}
 \end{figure}
+
+Bei den implementierten Endpunkten handelt es sich um die in \autoref{fig:apidocs} dargestellten. Folgende Funktionalitäten werden durch die Endpunkte bereitgestellt:
+
+\begin{itemize}
+  \item \textbf{/start/}: dieser Endpunkt stellt die Funktionalität bereit, den Roboter unter Verwendung einer vorhandenen Instruktions-Datei zu starten. Dieser Vorgang wird nur dann ausgeführt, wenn noch kein aktiver Fahrvorgang existiert. Ist keine valide Instruktions-Datei vorhanden wird der Vorgang ebenfalls nicht gestartet.
+  \item \textbf{/stop/}: dieser Endpunkt stellt die Funktionalität bereit, einen fahrenden Roboter zu stoppen und somit die Ausführung einer Instruktions-Datei zu unterbrechen. Diese Funktion könnte dann von Relevanz sein, wenn das Fahrverhalten Fehler aufweist.
+  \item \textbf{/shell/}: dieser Endpunkt liefert die Möglichkeit, reguläre Linux Shell Befehle über die API-Schnittstelle an den verwendeten Raspberry Pi zu übermitteln. Dies ist sowohl mit einzelnen, als auch Aneinanderreihung von Befehlen und Parametern möglich. Hiermit kann der Raspberry beispielsweise neu gestartet oder heruntergefahren werden. Einen Vorteil bietet der Endpunkt insofern, als keine gesonderte SSH-Verbindung für das Ausführen kleinerer Befehle aufgebaut werden muss.
+  \item \textbf{/status/}: dieser Endpunkt stellt eine Funktionalität bereit, mit der der aktuelle Status eines Roboters angefragt werden kann. Zum Zeitpunkt der Implementierung beschränkt sich dieser lediglich auf die beiden Zustände \textit{active} und \textit{inactive}. Weiterhin denkbar wären jedoch die Bereitstellung zusätzlicher Informationen wie dem Fortschritt einer aktuell abzuarbeitenden Instruktions-Datei.
+  \item \textbf{/uploadfile/}: dieser Endpunkt stellt die Funktionalität bereit, mit der ein Anwender die Instruktionen, der durch den Schwarmintelligenz-Algorithmus errechneten Pfadinformationen, übertragen kann. Es ist zu beachten, dass ein Roboter jeweils einen Datensatz an Instruktionen verarbeiten kann und zum aktuellen Zeitpunkt keine Warteschlange für die Aneinanderreihung mehrerer Instruktions-Dateien vorgesehen ist. Wählt der Anwender eine valide Datei für die Übertragung aus, wird diese nach vorheriger Überprüfung in ein  \textit{/tmp/} Verzeichnis übertragen. Möglicherweise bereits existierende Instruktionen werden hierbei überschrieben. Befindet sich der Roboter zum Zeitpunkt der Anfrage im Zustand \textit{active}, ist ein Übermitteln einer neuen Instruktions-Datei nicht möglich. 
+\end{itemize}
+
+\subsection{API Sicherheitsaspekte}
+Da der durch den Raspberry bereitgestellte Endpunkt eine Möglichkeit bietet, den Raspberry und die daran angeschlossene Hardware zu steuern, gilt es einige Grundsätze zu beachten, dass durch die Implementierung dieser Schnittstelle keine Schwachstellen offengelegt werden. Besonders, da eine Shell-Kommunikation, zur erweiterten Steuerung, sowie dem Sammeln von Debugging-Informationen genutzt werden soll.
+
+\subsubsection*{API Key Authentifizierung}
+Eine gängige Maßnahme um API-Endpunkte gegen unberechtigte Nutzung und gegebenenfalls schadhafte Anfragen zu schützen TODO(ZITAT), ist die Implementierung der Abfrage eines API-Keys zur Authentifizierung des Anwenders. Aus diesem Grund werden die Routen durch die Authentifizierung mittels eines API-Keys geschützt, sodass eine Ausführung nur dann erlaubt ist, wenn ein valider API Key im Header der jeweiligen Anfrage mitgeliefert wird. Eine valide Anfrage, wie sie vom Endpunkt des Raspberry Pis akzeptiert wird, ist in \autoref{lst:curl} dargestellt. Die verwendete Länge des API Keys wird anhand der Empfehlungen aus TODO(ZITAT) gewählt und in der Implementierung umgesetzt. Weiterhin wird der API Key nicht in den geschriebenen Code, sondern in die Systemumgebungsvariablen des ausführenden Systems integriert. Innerhalb des Codes wird diese Variable zu dem Zeitpunkt aufgerufen, wenn eine Überprüfung des API Keys notwendig ist.
+
+\inputminted{text}{{assets/code/curl.sh}}
+\vspace*{-3mm}
+\captionof{listing}{\label{lst:curl}Curl API Request}
+\vspace*{3mm}
+
+Eine Methode eines API-Endpunkts, der durch die Abfrage des API Keys abgesichert ist, ist in TODO(AUTOREF) dargestellt.
+
+\subsubsection*{Validierung der JSON Instruktionen}
+Neben API-Anfragen, die eine direkte Auswirkungen auf angeschlossene Hardware-Elemente haben können, handelt es sich bei dem Endpunkt \textit{uploadfile} um eine Schnittstelle, bei dem der Anwender einen Request ausführen kann, bei dem der Anwender eine JSON-Datei auf den Raspberry Pi übertragen kann. Die Möglichkeit dieses Vorgangs bietet potenziell die Möglichkeit, Dateien und Dateiformate zu übertragen, welche nicht dafür vorgesehen sind oder sogar schadhafte Auswirkungen auf das Zielsystem haben können. Aus diesem Grund wird eine Validierung der JSON-Datei als notwendig betrachtet. Zudem bietet sich hierdurch der Vorteil, dass die Struktur und der Aufbau der JSON-Datei im gleichen Zug überprüft werden kann und so von vornherein keine inkorrekten Dateien, bei deren Ausführung es zu Fehlern kommen könnte, auf den Raspberry Pi übertragen werden können.
+
+\section{Verarbeitung der Instruktionen}
+Damit der Roboter übermittelte Instruktionen umsetzen kann und sich der Roboter fortbewegen kann, wird eine Möglichkeit benötigt, um mit den verwendeten Motoren zu kommunizieren. Hierfür wird durch die Lehrstätte eine Hardware-Komponente bereitgestellt, die diese Anbindung vereinfacht. Das dafür verwendete Grove Base Hat, in \autoref{fig:base-hat} dargestellt, bietet die Möglichkeit mittels einem einzigen Stecker die Anschlüsse \textit{V, GND, GPIO} zu verbinden. Bei den Instruktionen, die für den Raspberry Pi Roboter benötigt werden, handelt es sich um die Funktionen vorwärts Fahren, rückwärts Fahren, rechts, sowie links Drehen. Diese Manöver werden folgendermaßen implementiert: Die verwendeten Motoren können sich sowohl vorwärts als auch rückwärts drehen. Für den Vorgang des vorwärts Fahrens werden beide Motoren gleichzeitig in Richtung vorwärts angesteuert. Das gleiche Vorgehen wird für den Vorgang des rückwärts Fahrens mit rückwärts Drehungen umgesetzt. Für die Vorgänge der Rechts- sowie Linksdrehung wird jeweils nur ein Motor zur Zeit angesteuert. Eine Drehung in einem bestimmten Winkel wird implementiert, indem zuvor durch Experimente bestimmt wird, wie viele MS ein Motor angesteuert werden muss, um den Roboter beispielsweise um 90 Grad zu drehen. Die Möglichkeit anderer Winkel wird mit diesem ermittelten Faktor errechnet. Für die vorwärts und rückwärts Bewegung muss durch eine Instruktion eine Zeit in Sekunden angegeben werden, für die der Roboter sich bewegen soll. Nach Ablauf dieser Zeit werden die Motoren gestoppt und es können weitere Instruktionen ausgeführt werden.
 
 \section{Umbau des Einplatinencomputers}
