@@ -204,7 +204,60 @@ Eine Methode eines API-Endpunkts, der durch die Abfrage des API Keys abgesichert
 \subsubsection*{Validierung der JSON Instruktionen}
 Neben API-Anfragen, die eine direkte Auswirkungen auf angeschlossene Hardware-Elemente haben können, handelt es sich bei dem Endpunkt \textit{uploadfile} um eine Schnittstelle, bei dem der Anwender einen Request ausführen kann, bei dem der Anwender eine JSON-Datei auf den Raspberry Pi übertragen kann. Die Möglichkeit dieses Vorgangs bietet potenziell die Möglichkeit, Dateien und Dateiformate zu übertragen, welche nicht dafür vorgesehen sind oder sogar schadhafte Auswirkungen auf das Zielsystem haben können. Aus diesem Grund wird eine Validierung der JSON-Datei als notwendig betrachtet. Zudem bietet sich hierdurch der Vorteil, dass die Struktur und der Aufbau der JSON-Datei im gleichen Zug überprüft werden kann und so von vornherein keine inkorrekten Dateien, bei deren Ausführung es zu Fehlern kommen könnte, auf den Raspberry Pi übertragen werden können.
 
+\inputminted{python}{{assets/code/json-check.py}}
+\vspace*{-3mm}
+\captionof{listing}{\label{lst:json-check}API JSON Validierung}
+\vspace*{3mm}
+
 \section{Verarbeitung der Instruktionen}
 Damit der Roboter übermittelte Instruktionen umsetzen kann und sich der Roboter fortbewegen kann, wird eine Möglichkeit benötigt, um mit den verwendeten Motoren zu kommunizieren. Hierfür wird durch die Lehrstätte eine Hardware-Komponente bereitgestellt, die diese Anbindung vereinfacht. Das dafür verwendete Grove Base Hat, in \autoref{fig:base-hat} dargestellt, bietet die Möglichkeit mittels einem einzigen Stecker die Anschlüsse \textit{V, GND, GPIO} zu verbinden. Bei den Instruktionen, die für den Raspberry Pi Roboter benötigt werden, handelt es sich um die Funktionen vorwärts Fahren, rückwärts Fahren, rechts, sowie links Drehen. Diese Manöver werden folgendermaßen implementiert: Die verwendeten Motoren können sich sowohl vorwärts als auch rückwärts drehen. Für den Vorgang des vorwärts Fahrens werden beide Motoren gleichzeitig in Richtung vorwärts angesteuert. Das gleiche Vorgehen wird für den Vorgang des rückwärts Fahrens mit rückwärts Drehungen umgesetzt. Für die Vorgänge der Rechts- sowie Linksdrehung wird jeweils nur ein Motor zur Zeit angesteuert. Eine Drehung in einem bestimmten Winkel wird implementiert, indem zuvor durch Experimente bestimmt wird, wie viele MS ein Motor angesteuert werden muss, um den Roboter beispielsweise um 90 Grad zu drehen. Die Möglichkeit anderer Winkel wird mit diesem ermittelten Faktor errechnet. Für die vorwärts und rückwärts Bewegung muss durch eine Instruktion eine Zeit in Sekunden angegeben werden, für die der Roboter sich bewegen soll. Nach Ablauf dieser Zeit werden die Motoren gestoppt und es können weitere Instruktionen ausgeführt werden.
 
 \section{Umbau des Einplatinencomputers}
+Um alle Komponenten des Roboters miteinander zu vereinen wurde eine Plattform mithilfe der Konstruktionssoftware \textit{Fusion 360} erstellt. Die Anforderungen an dieses Modell sind wie folgt:
+\begin{itemize}
+  \item Die Plattform muss die Möglichkeit bieten, den Raspberry Pi aufzunehmen und zu fixieren.
+  \item Es muss eine Möglichkeit geben, die Motoren zu fixieren.
+  \item Die Plattform muss die Möglichkeit bieten, die Anschlusskabel der Motoren und des Raspberry Pi zu verbinden.
+  \item Der SD-Kartenslot sowie die USB-Anschlüsse des Raspberry Pi müssen zugänglich sein.
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{con-plattform.png}
+    \caption{Plattform}
+  \end{subfigure}
+  \hspace{1cm}
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{con-motor-halterung.png}
+    \caption{Motor Halterung}
+  \end{subfigure}
+  \vskip\baselineskip
+  \begin{subfigure}[b]{0.45\textwidth}
+      \includegraphics[width=\textwidth]{con-vorderrad.png}
+      \caption{Vorderrad}
+    \end{subfigure}
+    \hspace{1cm}
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{con-rad-adapter.png}
+    \caption{Rad Adapter}
+  \end{subfigure}
+  \caption{Konstruierte Bauteile \label{fig:konstruktion}}
+\end{figure}
+
+Weiterhin müssen an die beiden Motoren die verwendeten Räder angebracht werden. Hierfür wurde ebenfalls ein Adapter konstruiert. Neben den genannten Bauteilen wurde weiterhin ein einzelnes Vorderrad für den Roboter konstruiert. Die Konstruktion der Bauteile ist in \autoref{fig:konstruktion} dargestellt. Nach Fertigstellung sowie mehreren Anpassungen der Konstruktionen wurden die Bauteile mit einem 3D-Drucker hergestellt. Die einzelnen Komponenten wurden miteinander verklebt und anschließend die übrigen Hardware-Komponenten mit Feingewinde-Schrauben befestigt. Der fertige Roboter ist in 
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{robot1.jpg}
+    \caption{Ansicht von unten}
+  \end{subfigure}
+  \hspace{1cm}
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{robot2.jpg}
+    \caption{Seitenansicht}
+  \end{subfigure}
+  \caption{Zusammengebauter Roboter \label{fig:fertiger-roboter}}
+\end{figure}
+
