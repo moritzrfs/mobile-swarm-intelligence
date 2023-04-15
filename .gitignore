@@ -23,6 +23,7 @@
 
 ## Generated if empty string is given at "Please type another file name for output:"
 # .pdf
+*. lop
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
@@ -294,9 +295,6 @@ TSWLatexianTemp*
 
 # xwatermark package
 *.xwm
-
-*.pdf
-
 # REVTeX puts footnotes in the bibliography by default, unless the nofootinbib
 # option is specified. Footnotes are the stored in a file with suffix Notes.bib.
 # Uncomment the next line to have this generated file ignored.
