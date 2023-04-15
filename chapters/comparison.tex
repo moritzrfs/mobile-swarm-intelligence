@@ -1,4 +1,4 @@
-\section*{Vor-und Nachteile von Schwarmalgorithmen}
+\section{Vor-und Nachteile von Schwarmalgorithmen}
 Schwarmalgorithmen sind aufgrund ihrer dezentralen Struktur sehr robust. Probleme einzelner Agenten beeinflussen den Algorithmus kaum. Schwarmalgorithmen sind zudem meist einfach strukturiert und simpel zu implementieren, gerade gegenüber anderen Algorithmen in ähnlichen Anwendungsfeldern. Die Agenten können gut auf veränderungen der Umwelt reagieren, daher funktionieren die Algorithmen auch in dynamischen Umgebungen. Durch die Simplizität der einzelnen Agenten lassen sich die Algorithmen auch einfach skalieren und parallelisieren.Sie haben einen signifikanten Vorteil bei mehreren Zielen und komplexen dynamischen Veränderungen gegenüber normalen Algorithmen. \\
 
 Bei großen Problemen neigen Schwarmintelligenz Algorithmen häufig zu verfrühten Konvergenzen auf lokalen Extremwerten. Um dies zu verhindern, werden häufig weiter Parameter eingeführt, was allerdings zu erhöhtem (Rechen-)Aufwand im Vorfeld führt, und die Anpassungsfähigkeit einschränkt.\cite {wu2022review} Eine korrekte Wahl der Parameter kann einen großen Einfluss haben. Sind Parameter schlecht gewählt, kann der Algorithmus nur sehr langsam oder gar nicht auf eine Lösung kommen.
@@ -11,17 +11,22 @@ Bei großen Problemen neigen Schwarmintelligenz Algorithmen häufig zu verfrüht
 
 Nachdem wir oben die drei Algorithmen Particel Swarm Optimization(PSO), Ant Colony Optimization(ACO) und  Artificial Bee Colony (ABC) vorgestellt haben, werden wir sie im folgenden zuerst generell und dann spezifisch für unseren Anwendungsfall vergleichen\\
 
-\subsection*{Particel Swarm Optimization}
+\subsection{Particel Swarm Optimization}
 PSO ist einfach zu implementieren, mit wenigen Parametern. Die Einflüsse der Parameter sind klar erkennbar, was ihre Wahl vereinfacht. Die Partikel kommunizieren nur in eine Richtung, vom allgemein oder lokalen besten zu den andern. Die Ausgabe von PSO liegt in den besten gefundenen Positionen der Partikel. PSO lässt sich gut auf Funktionsoptimierung anwenden. PSO bietet eine schnelle Konvergenz und eine hohe Effiizienz, besonders zu Beginn. Es bietet allerdings nur eine geringe Suchgenauigkeit und fällt schnell in lokale Optimas. \cite {yu2015swarm} PSO ist der ausgereifteste SI-Algorithmus. Er wurde bereits häufig und für viele unterschiedliche Probleme eingesetzt. 
 
 
-\subsection*{Ant Colony Optimization}
+\subsection{Ant Colony Optimization}
 ACO biete eine hohe Robustheit sowie eine besonders gute Parallelisierung.  ACO kann mit verschiedenen anderen heuristischen Algorithmen kombiniert werden, um es auf ein Problem abzustimmen. Die Kommunikation bei ACO funktioniert über das Verändern der Umwelt, die Ausgabe von ACO liegt in den zurückgelassenen Pheromonen. Allerdings kommt diese Flexibilität häufig mit leichten Performance-Nachteilen. Außerdem hat ACO wie PSO eine schlechte lokale Suchgenauigkeit und fällt schnell in lokale Optimas. ACO ist besonders für Routingprobleme, wie das Traveling Salesman Problem \cite{stutzle1997max} oder das Vehicle Routing Problem \cite{gambardella1999macs} optimal.
 
 
-\subsection*{Artificial Bee Colony}
-ABC bietet eine sehr schnelle Konvergenz in frühen Phasen. Allerdings werden diese gegen Ende langsamer.  ABC hat nur sehr wenige Parameter und ist daher sehr einfach aufzusetzen. Es bietet eine sehr gute Performance für viele Probleme. Da ABC sehr allgemein gehalten ist, bietet es auch eine große Flexibilität und Robustheit. Durch die Kombination aus lokaler und globaler Suche ist die Wahrscheinlichkeit des Findens des globalen Optimums erhöht. Allerdings braDie Ausgabe des Algorithmus kann indirekt im Tanz der Bienen gefunden werden. Die Biene mit dem attraktivsten Tanz, beziehungsweise der Agent mit der besten Fitnessevaluation, hat die beste Lösung des Problems.
+\subsection{Artificial Bee Colony}
+ABC bietet eine sehr schnelle Konvergenz in frühen Phasen. Allerdings werden diese gegen Ende langsamer.  ABC hat nur sehr wenige Parameter und ist daher sehr einfach aufzusetzen. Es bietet eine sehr gute Performance für viele Probleme. Da ABC sehr allgemein gehalten ist, bietet es auch eine große Flexibilität und Robustheit. Durch die Kombination aus lokaler und globaler Suche ist die Wahrscheinlichkeit des Findens des globalen Optimums erhöht. Allerdings braucht eine ABC-Umsetzung überdurchschnittlich viele Funktionsevaluierungen,was die Performance beeinträchtigen kann. Die Ausgabe des Algorithmus kann indirekt im Tanz der Bienen gefunden werden. Die Biene mit dem attraktivsten Tanz, beziehungsweise der Agent mit der besten Fitnessevaluation, hat die beste Lösung des Problems.
 
+\section{Wahl eines Algorithmus}
+
+Wir haben uns aus verschiedenen Gründen für die umsetzung einer ABC entschieden. Diese werden im Folgenden dargelegt:\\
+ Artificial bee colony ist optimal für Optimierungen geeignet, besonders für Optimierungen für nur ein Ziel (in unserem Fall der kürzeste Weg). Es hat keine großen Kontrollparameter, die erst auf das Problem eingestellt werden müssen und kann daher effizient auf Veränderungen reagieren. Laut einer Studie von Karaboga \cite{karaboga2008performance} schlägt es PSO und weiter Algorithmen klar in einem klassischem Benchmark-Test von Krink \cite{krink2004noisy}. ACO ist hier nicht sehr relevant, da es nicht ursprünglich für Optimierungsprobleme konzipiert wurde und daher bei den meisten Problemen nicht mit PSO und ABC mithalten kann. In einem weiter Test mit verschiedenen SI-Algorithmen (unter anderem auch PSO und ACO) schneidet ABC im Durchschnitt als der Schnellste Algorithmus ab \cite{ab2015comprehensive}. Auch bei einem großen Traveling Salesmen Problem schlägt es PSO und ACO in Performance \cite{sabet2016comparison}.
+Aufgrund er Kombination von Geschwindigkeit und einer hohen Anpassung an unser Problem haben wir uns für die Nutzung von ABC entschieden.
 
 
 
