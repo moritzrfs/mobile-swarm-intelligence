@@ -1,3 +1,4 @@
 \section{Zusammenfassung}
-
+Anschließend wurde der Bienenalgorithmus nach der Evaluierung der Algorithmen als geeignet ausgewählt und in Python implementiert. 
+Die Implementierung ist allerdings auf unser Problem zur Wegfindung auf einer Karte mit Hindernissen angepasst. Dabei wird die stetige Gleichverteilungsfunktion verwendet, um zufällige Punkte innerhalb der Karte zu generieren, die dann auf ihre Gültigkeit überprüft werden. Die Gültigkeit eines Punktes wird durch zwei Bedingungen definiert: Der Punkt darf nicht innerhalb eines Hindernisses liegen und eine Verbindung von zwei Punkten darf kein Hindernis schneiden. Die Bewertung eines Pfades wird durch die Summe der euklidischen Abstände zwischen den Punkten berechnet. Die lokale Suche des Bienenalgorithmus wurde dabei genutzt, um die Punkte in einer bestimmten Nachbarschaft gegebenenfalls zu optimieren. Eine Ausnahme bildet der letzte Punkt des Pfades, der unter Umständen keinen gültigen Weg zum Ziel haben kann und daher durch einen neuen Punkt ersetzt wird. Das Ergebnis des Algorithmus liefert den besten Pfad der gefunden werden konnte. 
 \section{Ausblick}
