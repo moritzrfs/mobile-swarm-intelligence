@@ -16,6 +16,8 @@
 \usepackage[backend=biber]{biblatex}
 \addbibresource{literature/moritz.bib}
 \setminted[python]{tabsize=2, linenos, breakanywhere, breaklines, frame=lines, fontsize=\footnotesize}
+\setminted[text]{tabsize=2, breakanywhere, breaklines, frame=lines, fontsize=\footnotesize}
+\setminted[json]{tabsize=2, breakanywhere, breaklines, frame=lines, fontsize=\footnotesize}
 \usepackage{setspace}
 \onehalfspacing % Setze Zeilenabstand auf 1,5-fach
 
@@ -43,3 +45,8 @@
 }
 
 \lstset{style=mystyle}
+
+\renewcommand{\listingscaption}{Code Darstellung}
+\renewcommand{\lstlistlistingname}{Code Darstellungen}
+\renewcommand{\listoflistingscaption}{Code Darstellungen}
+\renewcommand{\lstlistingname}{Code}

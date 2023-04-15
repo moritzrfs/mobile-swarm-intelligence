@@ -17,8 +17,6 @@ waggle-dance
 waggle dance
 Bee-Algorithm
 Pathfinding-Algorithmen
-<<<<<<< Updated upstream
-=======
 Instruktions-Datei
 uploadfile
 Instruktions-Dateien
@@ -27,4 +25,4 @@ populationsbasierte
 populationsbasierten
 Explorationsstrategie
 Schwarmoptimierungsalgorithmen
->>>>>>> Stashed changes
+
