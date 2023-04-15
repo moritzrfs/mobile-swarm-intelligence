@@ -2,11 +2,12 @@
 Die Partikelschwarmoptimierung/particle swarm optimization (PSO) wurde zuerst von Dr. Kennedy und Dr. Eberhart in 1995 vorgestellt\cite{kennedy1942particle}.
  Sie ist inspiriert vom Verhalten von Vogelschwärmen und Fischschulen. Jeder Teil wird als Partikel bezeichnet, die Gesamtheit als Schwarm.
 \\ Die Partikel werden gleichverteilt über dem Suchbereich verteilt. Sie erhalten eine zufällige Startgeschwindigkeit. 
-Der Suchraum hat \textbf{D} Dimensionen und \textbf{N} ist die Menge an Partikeln. Nun hat das \textbf{i}-te Partikel die Position X\textsubscript{i}=(x\textsubscript{i1},x\textsubscript{i2},x\textsubscript{i3},... ...,x\textsubscript{iD})
+Der Suchraum hat D Dimensionen und N ist die Menge an Partikeln. Nun hat das i-te Partikel die Position X\textsubscript{i}=(x\textsubscript{i1},x\textsubscript{i2},x\textsubscript{i3},... ...,x\textsubscript{iD})
   und die Geschwindigkeit V\textsubscript{i}(v\textsubscript{i1},v\textsubscript{i2},v\textsubscript{i3},... ...,v\textsubscript{iD}). Außerdem speichert jedes Partikel seine beste Position P\textsubscript{ibest} und erhält die insgesamt beste Position P\textsubscript{gbest}. 
 \\
 Jedes Partikel updated seine Position nach den folgenden Gleichungen:\\\\
-\large V\textsubscript{i}\textsuperscript{K+1}=wV\textsubscript{i}\textsuperscript{K}+c\textsubscript{1}r\textsubscript{1}(P\textsubscript{ibest}-X\textsubscript{i}\textsuperscript{K})+c\textsubscript{2}r\textsubscript{2}(P\textsubscript{gbest}-X\textsubscript{i}\textsuperscript{K})\\\\\normalsize
+\large $V_i^{k+1}=wV_i^k+c_1r_1(P_{ibest}-X_i^k)+c_2r_2(P_{gbest}-X_i^k)$
+\\\\\normalsize
 $X_i^{K+1}=X_i^K+V_i^{K+1}$
 \begin{itemize}
 
@@ -14,6 +15,7 @@ $X_i^{K+1}=X_i^K+V_i^{K+1}$
   \item i: Nummer des Partikels
   \item w: Startgewicht, gibt an wie stark/schwach sich die Geschwinidgkeit pro Iteration verändert, um Divergenz zu vermeiden sollte es  kleiner als 1 gewählt werden
   \item c1,c2: kognitives und soziales Gewicht, positive Konstanten
+  \item $r_1,r_2$: uniform verteilte Zufallswerte im Bereich [0,1]
 
 \end{itemize}
 Schritte der gründsätzlichen Durchführung der Partikelschwarmoptimierung:
@@ -25,12 +27,13 @@ Schritte der gründsätzlichen Durchführung der Partikelschwarmoptimierung:
   \item Wiederholung: Schritt 2 bis 4 werden nun bis Erreichen des Abbruchkriteriums wiederholt
 \end{enumerate}\\
 
-Hier gibt es nun noch verschieden Einflüsse auf die Umsetzung der Partikelschwarmoptimierung.\\
+Die Partikelschwarmoptimierung kann auf unterschiedliche Weisen umgesetzt werden.
 Das Abbruchkriterium kann unterschiedlich gewählt werden. Standardmäßig werden hier entweder die Anzahl der Iterationen im Vorhinein festgelegt oder der Algorithmus endet nach einer zu geringen Änderung nach mehreren Iterationen. 
 Um die Konvergenz zu beschleunigen, kann der $P_{ibest}$-Wert anstatt des persönlich besten Wertes den besten Wert eines bestimmten Umfelds speichern.
-Der Wahl der Fitnessevaluierung muss hier ein großer Wert zukommen. Eine gut gewählte Fitnessfunktion kann die Konvergenz stark beschleunigen und somit den benötigten Rechenaufwand minimieren.\\
+Der Wahl der Fitnessevaluierung kommt bei PSO ein großer Wert zukommen. Eine gut gewählte Fitnessfunktion kann die Konvergenz stark beschleunigen und somit den benötigten Rechenaufwand minimieren.\\
 PSO ist einfach zu implementieren und hat nur wenige Parameter die gesetzt werden müssen. Es braucht keine skalierten Daten und ist einfach zu parallelisieren \cite{poli2007particle}.
 Eine Umsetzung mit einem großen kognitiven Gewicht $c_1$ führt zu einer ausgiebigen Exploration, während ein großes soziales Gewicht $c_2$ zu einer schnellen Konvergenz führt. Daher können diese Parameter dynamisch gewählt werden, um anfangs den gesamten Suchraum zu erforschen und später trotzdem schnell zu konvergieren \cite{suganthan1999particle}. 
+Umsetzungen von PSO lassen sich in zwei Kategorien einteilen: synchrone (S-PSO) und asynchone (A-PSO) Partikelschwarmoptimierung. Im ursprünglichen, asynchronen PSO wurden die Geschwindigkeiten und Positionen aller Partikel gelichzeitig am Ende jeder Iteration verändert. Im asynchronen PSO wird die Geschwindigkeit und Position der Partikel dauerhaft basieren auf den verfügbaren Informationen aktualisiert.  S-PSO erreicht eine höhere Ausnutzung, während A-PSO eine besser Exploration, sowie eine schneller Konvergenz liefert. \cite{carlisle2001g}, \cite*{ab2014synchronous}
 PSO teilt viele Merkmale mit genetischen Algorithmen. Beide basieren auf einer zufälligen Initialisierung ihrer Agenten und entwickeln diese Anhand einer Fitnessevaluierung weiter. Allerdings erfolgt der Informationsaustausch grundlegend unterschiedlich. Während bei einem genetischen Algorithmus alle Agenten untereinander Informationen austauschen, erfolgt dies bei einer PSO nur in eine Richtung, vom besten Partikel zu allen anderen.\\
 
 
@@ -43,7 +46,7 @@ PSO teilt viele Merkmale mit genetischen Algorithmen. Beide basieren auf einer z
 
 
 \section{Ameisen Algorithmen}
-Ameisenalgorithmen sind von der Futtersuche der Ameisen abgeleitet. Jede Ameise scheidet auf ihrem Weg Pheromone aus, welche mit der Zeit verdunsten. 
+Ameisenalgorithmen sind von der Futtersuche der Ameisen abgeleitet. Ameisen kommunizieren über Stigmergie. Das heißt,sie kommunizieren nur indirekt indem sie ihre lokale Umwelt verändern. Jede Ameise scheidet auf ihrem Weg Pheromone aus, welche mit der Zeit verdunsten. 
 Folgende Ameisen wählen wahrscheinlicher einen Weg mit größerer Pheromonkonzentration. 
 Existieren nun zwei unterschiedlich lange Wege mit gleicher Pheromonkonzentration, entscheiden sich etwa gleich viele Ameisen für beide Wege. 
 Da die Ameisen auf dem kürzeren Weg in gleicher Zeit allerdings öfter laufen, steigt hier die Konzentration schneller als auf dem längeren Weg. 
@@ -64,11 +67,14 @@ Jede Ameise bewegt sich von Punkt x zu Punkt y mit folgender Wahrscheinlichkeit:
   \item b: Gewicht des Einflusses von $n_x_y$
 \end{itemize}
 \\
-$n_{xy}$ wir berechnet durch:\\\large
-$n_{xy}=\frac{1}{d_{xy}}$\\\normalsize
-mit $d_{xy}$ als Abstand zwischen x und y.\\
+$n_{xy}$ wir berechnet durch:\\\\\large
+$n_{xy}=\frac{1}{d_{xy}}$\normalsize
+\begin{itemize}
+  \item $d_{xy}$ :Abstand zwischen x und y.
+\end{itemize}
 
-Nun bewegt sich jeder Agent nach der von ihm berechneten Wahrscheinlichkeit, bis er den Zielzustand erreicht. Außerdem erhält jeder Agent eine taboo Liste der bereits besuchten Zustände, um einen Kreislauf zu verhindern. Dann werden die Pheromone folgendermaßen aktualisiert:\\\large
+
+Nun bewegt sich jeder Agent nach der von ihm berechneten Wahrscheinlichkeit, bis er den Zielzustand erreicht. Außerdem erhält jeder Agent eine Liste der bereits besuchten Zustände, die er nichtmehr besuchen darf, um einen Kreislauf zu verhindern. Dann werden die Pheromone folgendermaßen aktualisiert:\\\\\large
 $T_{xy}^k=(1-p)T_x_y^k+\Delta T_x_y^k$\normalsize
 \begin{itemize}
   \item p: Pheromonverdunstung
@@ -79,8 +85,8 @@ $\Delta T_x_y^k$ berechnet sich nun folgendermaßen:\\
 \large
 $\Delta T_x_y^k = \left\{
 \begin{array}{ll}
-\frac{Q}{L_k} & \textrm{wenn Zustand besucht} \\
-0 & \, \textrm{sonst} \\
+\frac{Q}{L_k} & \normalsize \textrm{wenn Zustand besucht} \\
+0 & \, \normalsize\textrm{sonst} \\
 \end{array}
 \right. $
 \normalsize
@@ -96,8 +102,8 @@ $\Delta T_{xy}$ wird berechnet mit:\\
 \large
 $\Delta T_{xy}  = \left\{
   \begin{array}{ll}
-  \frac{1}{L_{best}} & \textrm{wenn Übergang benutzt} \\
-  0 & \, \textrm{sonst} \\
+  \frac{1}{L_{best}} & \normalsize\textrm{wenn Übergang benutzt} \\
+  0 & \, \normalsize \textrm{sonst} \\
   \end{array}
   \right. $
   \normalsize\\
@@ -114,8 +120,8 @@ Das Ziel des lokalen Updates ist die Erweiterung der Suche in einer Iteration. D
 \large
 $T_{xy}  = \left\{
   \begin{array}{ll}
-  $(1-p)\cdot T_{xy}+p\cdot \Delta T_{xy}$ & \textrm{wenn Übergang auf dem besten Pfad} \\
-  $T_x_y$ & \, \textrm{sonst} \\
+  $(1-p)\cdot T_{xy}+p\cdot \Delta T_{xy}$ & \normalsize \textrm{wenn Übergang auf dem besten Pfad} \\
+  $T_x_y$ & \, \normalsize \textrm{sonst} \\
   \end{array}
 \right. $
 \normalsize\\
@@ -138,10 +144,10 @@ Schritte der grundsätzlichen Durchführung von ACO:
 \end{figure}
 
 \section{Bienen Algorithmen}
-Der Bienen Algorithmus ist von der Futtersuche der Bienen abgeleitet. Ein kleiner Teil des Bienenschwarms fungiert als Kundschafter für die Kolonie.
+Der Bienen Algorithmus ist von der Futtersuche der Bienen abgeleitet.ABC wurde in 2005 von Karaboga vorgestellt\cite{karaboga2005idea}. Ein kleiner Teil des Bienenschwarms fungiert als Kundschafter für die Kolonie.
 Sie sind konstant zufällig auf der Futtersuche. Finden sie eine Futterquelle analysieren sie deren Effektivität und kehren zum Bienenstock zurück. Die Effektivität hängt von Faktoren wie der Menge, Entfernung und Zuckergehalt ab.\cite{PHAM2006454}
 Die Bienen, die eine effektive Futterquelle gefunden haben, führen nun einen sogenannten \emph{waggle dance} auf dem \emph{dance floor} aus \cite{Seeley+1995}. Damit gibt sie die Wegbeschreibung zur Futterquelle weiter.
-Unbeschäftigte Arbeiterbienen schauen auf dem dance floor nach Wegbeschreibungen. Umso effektiver die Futterquelle, umso länger der Tanz, daher werden auch mehr Arbeiterbienen diese ausnutzen.\cite{KARABOGA2009108}\\
+Unbeschäftigte Arbeiterbienen schauen auf dem dance floor nach Wegbeschreibungen. Umso effektiver die Futterquelle, umso länger der Tanz, daher werden auch mehr Arbeiterbienen diese ausnutzen.\cite{KARABOGA2009108} ABC ereicht gute Resultate für relativ niedrige Rechenaufwände \cite*{karaboga2008performance}. Außerdem hat es nur sehr wenige Kontrollparameter die gewählt werden müssen.\\
 
 Im Artificial Bee Colony (ABC) Algorithmus gibt es drei Gruppen an Bienen:
 \begin{enumerate}
@@ -149,31 +155,61 @@ Im Artificial Bee Colony (ABC) Algorithmus gibt es drei Gruppen an Bienen:
   \item Betrachtende Bienen: Sie stehen am dance floor und beobachten die Tänze. Sie suchen sich den besten aus und werden nun zu beschäftigten Bienen
   \item Beschäftigte Bienen: Sie fliegen zu der von ihr gewählten Futterquelle. Nachdem sie zurückgekehrt sind kommunizieren sie ihre Informationen auf dem dance floor weiter
 \end{enumerate} 
-
 Die Position einer Futterquelle repräsentiert eine mögliche Lösung des Optimierungsproblems, die Effektivität der Futterquelle die damit verbundene Fitness.
-Der Algorithmus beginnt mit einem zufälligen Pfad von Start zu Ende. Auf diesem befinden sich Breakpoints, z.B. an Stellen wo ein Hindernis getroffen wird.
-Breakpoints sind Stellen an denen sich zwei Geraden treffen. Diese Stellen sind Futterquellen und in ihrer Nähe suchen die jeweiligen Bienen. 
-Es gibt immer so viele beschäftigte Bienen wie Futterquellen bzw Pfade. Jede beschäftigte Biene hat einen festen Pfad, den sie versucht zu optimieren\cite{pham2005bees}. 
-Die betrachtenden Bienen wählen nun einen Pfad abhängig von folgender Wahrscheinlichkeit:\\\\
+Jede beschäftige Biene ist mit einer Lösung verknüpft. Das heißt, es gibt gleich viele beschäftigte Bienen wie Futterquellen.\cite{ pham2005bees} Ist eine Futterquelle erschöpft, so werden die damit verknüpften beschäftigten Bienen zu betrachtenden Bienen. Dies wird im Algorithmus durch einen Parameter $limit$ umgesetzt. Für jede Lösung wird eine Versuchsanzahl pro Iteration hochgezählt, erreicht diese den $limit$-Wert wird die Lösung nichtmehr weiter besucht und die Agenten suchen sich neue Lösungen.
+ \\
+Der Algorithmus beginnt mit der Initialisierungphase. Es werden zufällige Futterquellen nach folgender Formel initialisiert: \\\\
+$x_{m,i}=l_i+r \cdot (u_i-l_i)$
+\begin{itemize}
+  \item $x_{m,i}$: Der Wert von m in der Dimension i
+  \item $l_i$: unterer, beziehungsweise oberer Rand von $x_{m,i}$
+  \item r: zufälliger Wert im Bereich [0,1]
+\end{itemize}
+
+Die Fitnesswerte der so erhaltenen Lösungen werden evaluiert und gespeichert.\\
+Dann kommt die Phase der beschäftigten Bienen.
+Die beschäftigten Bienen suchen eine bessere Futterquelle/Lösung in der Nähe ihrer Quelle ($x_m$) nach folgender Gleichung: \\
+$v_{m,i}= x_{m,i}+\Phi _{m,i}( x_{m,i}- x_{k,i})$
+\begin{itemize}
+  \item $x_k$: zufällig gewählte Futterquelle
+  \item i: zufällige Dimension
+  \item $\Phi _{m,i}$: zufällige Zahl im Bereich [-1,1]
+\end{itemize}
+
+Nun wird die Fitness von $v_{m}$ evaluiert, ist sie besser als $x_m$ ersetzt $v_m$ $x_m$ als Futterquelle.\\
+Nun folgt die Phase der Beschäftigten Bienen. Sie bekommen die Futterquellen der Beschäftigten Bienen sowie deren Fitnessevaluierung.  Nun wählen sie eine Futterquelle abhängig von folgender Wahrscheinlichkeit:\\ 
 \large
 $p_i=\frac{f_i}{\Sigma^N_{n=0}f_n}$
 \normalsize
 \begin{itemize}
-  \item $f_i$: Fitness des Pfades
-  \item N: Anzahl aller Pfade
+  \item $f_i$: Fitness des Lösung
+  \item N: Anzahl aller Lösungen
 \end{itemize}
-Die betrachtenden Bienen versuchen nun den so gewählten Pfad zu verbessern. Kundschafter Bienen suchen zufällig nach neuen Pfaden.\\
+Auch hier wird die Fitness des erhaltenen Wertes evaluiert und im Falle einer Verbesserung der alte Wert ersetzt.\\
+In der Kundschafter Bienen Phase werden die Anzahl der Versuche einer Quelle überprüft. Wurde die Futterquelle schon öfter erfolglos versucht zu optimieren, wie der $limit$ Parameter vorgibt, so wird die damit verknüpfte beschäftigte Biene eine Kundschafter Biene. Kundschafter Bienen benutzen die Formel aus der Initialisierung, um zufällige Lösungen zu suchen und zu evaluieren. Treffen sie so  zufällig auf eine Lösung mit einem guten Fitnesswert, so werden sie die beschäftigte Biene dieser Lösung.\\
+
+Eine verbesserte Umsetzung für ABC wurde im Jahr 2014 von Karaboga veröffentlicht. Die quick Artificial Bee Colony (qABC) verändert das Verhalten der betrachtenden Bienen, um diese der realen Welt besser anzupassen und die Optimierung zu verschnellern. In der echten Welt, bekommen die betrachtenden Bienen nur eine Region durch den waggle dance mitgeteilt, und suchen sich dort die für sie beste Option zum Ausnutzen. Bei der normalen Umsetzung von ABC wird allerdings die gleiche Formel zugrunde gelegt. Daher führt der qABC Algorithmus folgende Formel für die betrachtenden Bienen ein:\\
+$v_{m,i^{best}}= x_{m,i^{best}}+\Phi_{m,i}( x_{m,i^{best}}- x_{k,i})$
+\begin{itemize}
+  \item $x_{m,i^{best}}$: beste gefundene Lösung in der Nachbarschaft
+\end{itemize}
+
+Das heißt, die betrachtenden Bienen bekommen von den beschäftigten Bienen einen Punkt, welchen sie als Mittelpunkt für eine Nachbarschaft wählen. Dann suchen sie in dieser Nachbarschaft den für sie besten Punkt und errechnen den dazugehörige Fitnesswert. Um die Größe der Nachbarschaft zu bestimmen, wird der Parameter r eingeführt, welcher der Radius der Nachbarschaft angibt. Bei einem Radius r=0 wird der qABC wieder zu einem standartmäßigen ABC.
+\\
+
 Schritte der gründsätzlichen Durchführung des Bienen Algorithmus:
 \begin{enumerate}
-  \item Initialisierung: Ein initialer Pfad wird gewählt, gerade Linie von Start zu Ende, drehen wenn Hindernis gefunden
-  \item Länge des initialen Pfades berechnen
-  \item Jedem Breakpoint wird eine beschäftigte Biene zugewiesen, diese versucht ihn zu verbessern
-  \item Jeder betrachtenden Bienen wird ein Breakpoint zugewiesen,diese versucht sie zu verbessern
-  \item Kundschafter Bienen suchen nach neuen Pfaden
-  \item Kann eine Biene einen Pfad verbessern, wird dieser gespeichert
-  \item Findet eine Kundschafter Biene einen neuen Pfad wird dieser gespeichert
+  \item Initialisierung: Initiale Lösungen werden gewählt 
+  \item Fitness der initialen Lösungen berechnen
+  \item Jeder Lösung wird eine beschäftigte Biene zugewiesen,sie sucht in der Umgebung nach einer besseren Lösung
+  \item Ihre Lösung wird evaluiert und, wenn besser als die bisherige, gespeichert
+  \item Jede betrachtende Biene wählt eine Lösung, sie sucht in der Umgebung nach einer besseren Lösung
+  \item Ihre Lösung wird evaluiert und, wenn besser als die bisherige, gespeichert
+  \item Kundschafter Bienen suchen zufällig nach neuen Lösungen
+  \item Ihre Lösung wird evaluiert und, wenn ähnlich gut wie bisherige, gespeichert
   \item Wiederholung: Schritt 3-7 wiederholen bis Abbruchkriterium erreicht ist
 \end{enumerate}
+
 
 \begin{figure}
   \centering
