@@ -1,0 +1,12 @@
+{
+    "instructions": [
+      {
+        "action": "drive_straight",
+        "seconds": 2
+      },
+      {
+        "action": "turn_right",
+        "degree": 45
+      }
+    ]
+  }

@@ -1,0 +1,1 @@
+{"rule":"PRAEP_DAT","sentence":"^\\QEs geht darum, wie nahe die Simulation der realen Umgebung kommt und wie gut die Implementierung die Gegebenheiten und Bedingungen der realen Welt berücksichtigt.\\E$"}

@@ -16,3 +16,13 @@ AntNet
 waggle-dance
 waggle dance
 Bee-Algorithm
+Pathfinding-Algorithmen
+Instruktions-Datei
+uploadfile
+Instruktions-Dateien
+Grove
+populationsbasierte
+populationsbasierten
+Explorationsstrategie
+Schwarmoptimierungsalgorithmen
+

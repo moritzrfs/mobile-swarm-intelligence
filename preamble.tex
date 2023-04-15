@@ -1,9 +1,13 @@
 \usepackage[ngerman]{babel}
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage[table]{xcolor}
 \graphicspath{ {assets/images/} }
 \usepackage{titling}
 \usepackage{tabularx}
+\usepackage{caption}
 \usepackage{datetime}
 \newdateformat{gerFormat}{\THEDAY. \monthname[\THEMONTH] \THEYEAR}
 \usepackage{minted}
@@ -13,5 +17,37 @@
 \addbibresource{literature/moritz.bib}
 \addbibresource{literature/jonas.bib}
 \setminted[python]{tabsize=2, linenos, breakanywhere, breaklines, frame=lines, fontsize=\footnotesize}
+\setminted[text]{tabsize=2, breakanywhere, breaklines, frame=lines, fontsize=\footnotesize}
+\setminted[json]{tabsize=2, breakanywhere, breaklines, frame=lines, fontsize=\footnotesize}
 \usepackage{setspace}
 \onehalfspacing % Setze Zeilenabstand auf 1,5-fach
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=8pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\renewcommand{\listingscaption}{Code Darstellung}
+\renewcommand{\lstlistlistingname}{Code Darstellungen}
+\renewcommand{\listoflistingscaption}{Code Darstellungen}
+\renewcommand{\lstlistingname}{Code}

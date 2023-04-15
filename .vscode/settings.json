@@ -1,0 +1,87 @@
+// Workspace settings
+{
+    // The following will hide the js and map files in the editor
+    "files.exclude": {
+        "**/*.aux": true,
+        "**/*.bcf": true,        
+        "**/*.bbl": true,
+        "**/*.blg": true,
+        "**/*.log": true,
+        "**/*.out": true,
+        "**/*.run.xml": true,
+        "**/*.synctex.gz": true,
+        "**/*.fdb_latexmk": true,
+        "**/*.fls": true,
+        "**/*.toc": true,
+        "**/*.lof": true,
+        "**/*.lot": true,
+    },
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+              "--shell-escape",
+              "-synctex=1",
+              "-interaction=nonstopmode",
+              "-file-line-error",
+              "-pdf",
+              "-outdir=%OUTDIR%",
+              "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "--shell-escape",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "--shell-escape",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "biber",
+            "command": "biber",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "xelatex",
+            "tools": [
+              "xelatex"
+            ]
+        },
+        {
+            "name": "xelatex -> biber -> xelatex*2",
+            "tools": [
+                "xelatex",
+                "biber",
+                "xelatex",
+                "xelatex"
+            ]
+        },
+        {
+            "name": "latexmk",
+            "tools": [
+              "latexmk"
+            ]
+        }
+    ],
+}
