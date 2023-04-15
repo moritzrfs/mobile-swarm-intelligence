@@ -1,6 +1,7 @@
+% LTeX: language=de-DE
 \section{Partikelschwarmoptimierung}
 Die Partikelschwarmoptimierung/particle swarm optimization (PSO) wurde zuerst von Dr. Kennedy und Dr. Eberhart in 1995 vorgestellt\cite{kennedy1942particle}.
- Sie ist inspiriert vom Verhalten von Vogelschwärmen und Fischschulen. Jeder Teil wird als Partikel bezeichnet, die Gesamtheit als Schwarm.
+Sie ist inspiriert vom Verhalten von Vogelschwärmen und Fischschulen. Jeder Teil wird als Partikel bezeichnet, die Gesamtheit als Schwarm.
 \\ Die Partikel werden gleichverteilt über dem Suchbereich verteilt. Sie erhalten eine zufällige Startgeschwindigkeit. 
 Der Suchraum hat D Dimensionen und N ist die Menge an Partikeln. Nun hat das i-te Partikel die Position $X_i=(x_{i1},x_{i2},x_{i3},...\ ...x_{iD})$
   und die Geschwindigkeit
@@ -50,10 +51,10 @@ Existieren nun zwei unterschiedlich lange Wege mit gleicher Pheromonkonzentratio
 Da die Ameisen auf dem kürzeren Weg in gleicher Zeit allerdings öfter laufen, steigt hier die Konzentration schneller als auf dem längeren Weg. 
 Infolgedessen laufen immer mehr Ameisen den kürzeren Weg und es bildet sich eine Ameisenstraße.\\
 Es gibt viele verschiedene Umsetzungen der Ameisenalgorithmen. Der erste Ansatz wurde von Marco Dorigo 1991 vorgestellt\cite{Dorigo1991AntSA} und 1996 nochmal verbessert\cite{484436}.
-Sein Ansatz namens \emph{Ant System} lieferte Grundlagen welche er 1997 in einem neuen System namens \emph{Ant Colony System} weiter verbesserte\cite{585892}. In 2000 veröffentlicht Stützle Hoos einen weiteren ACO Algorithmus namens \emph{MAX-MIN Ant System (MMAS)} \cite{STUTZLE2000889}. Es exisitieren noch einige weiter ACO Algortihmen, wie das \emph{best-worst Ant System (BWAS)}\cite{cordon2000new} oder das \emph{Hyper-Cube Ant System}\cite{blum2004hyper}. Diese sind allerdings nicht so verbreitet und werden daher im Folgenden nicht weiter behandelt.   \\
+Sein Ansatz namens \emph{Ant System} lieferte Grundlagen welche er 1997 in einem neuen System namens \emph{Ant Colony System} weiter verbesserte\cite{585892}. In 2000 veröffentlicht Stützle Hoos einen weiteren ACO Algorithmus namens \emph{MAX-MIN Ant System (MMAS)} \cite{STUTZLE2000889}. Es exisitieren noch einige weiter ACO Algortihmen, wie das \emph{best-worst Ant System (BWAS)}\cite{cordon2000new} oder das \emph{Hyper-Cube Ant System}\cite{blum2004hyper}. Diese sind allerdings nicht so verbreitet und werden daher im Folgenden nicht weiter behandelt. \\
 Im Folgenden werden wir erst auf AS eingehen und dann die Unterschiede zu MMAS und ACS erklären.
-\subsubsection{Ant System}\\
-Jede Ameise bewegt sich von Punkt x zu Punkt y mit folgender Wahrscheinlichkeit:\\
+\subsubsection{Ant System}
+Jede Ameise bewegt sich von Punkt x zu Punkt y mit folgender Wahrscheinlichkeit: \\
 
 \large$p_{xy}^k=\frac{(T_{xy}^a)(n_{xy}^b)}{\Sigma(T_{xy}^a)(n_{xy}^b) }$
 \normalsize
@@ -64,11 +65,14 @@ Jede Ameise bewegt sich von Punkt x zu Punkt y mit folgender Wahrscheinlichkeit:
   \item $n_{xy}$: Maß wie wünschenswert dieser Übergang ist
   \item b: Gewicht des Einflusses von $n_{xy}$
 \end{itemize}
-\\
-$n_{xy}$ wir berechnet durch:\\\\\large
-$n_{xy}=\frac{1}{d_{xy}}$\normalsize
+
+$n_{xy}$ wird berechnet durch:\\ 
+\begin{large}
+  $n_{xy}=\frac{1}{d_{xy}}$
+\end{large}
+
 \begin{itemize}
-  \item $d_{xy}$ :Abstand zwischen x und y.
+  \item $d_{xy}$: Abstand zwischen x und y.
 \end{itemize}
 
 Nun bewegt sich jeder Agent nach der von ihm berechneten Wahrscheinlichkeit, bis er den Zielzustand erreicht. Außerdem erhält jeder Agent eine Liste der bereits besuchten Zustände, die er nichtmehr besuchen darf, um einen Kreislauf zu verhindern. Dann werden die Pheromone folgendermaßen aktualisiert:\\\\\large
@@ -108,22 +112,27 @@ $\Delta T_{xy}  = \left\{
 $L_{best}$ kann jetzt entweder der beste bisherige Pfad,der beste Pfad aus der letzten Iteration sein oder eine Kombination der beiden.\\
 \subsubsection{Ant Colony System }
 Ant Colony System (ACS) bringt mehrere kleinere Verbesserungen mit sich. Die wichtigste Veränderung ist die Erweiterung des Pheromonupdates. Diese wird nun in zwei Schritten vorgenommen. Der erste Schritt ist das lokale Pheromonupdate. Jeder Agent aktualisiert nach jedem Schritt die Pheromone auf seinem letzten Übergang mit folgender Gleichung:\\\\
-\large
-$T_{xy}=(1-\varphi)\cdot T_{xy}+\varphi\cdot T_0$\\
-\normalsize
+
+\begin{large}
+  $T_{xy}=(1-\varphi)\cdot T_{xy}+\varphi\cdot T_0$\\
+\end{large}
+
 \begin{itemize}
   \item $\varphi$: Pheromon-Verdunstungskoeefizient, Wert zwischen 0 und 1
   \item $T_0$: Initialer Wert des Pheromons
 \end{itemize}
-Das Ziel des lokalen Updates ist die Erweiterung der Suche in einer Iteration. Durch das Vermindern der Konzentration an bereits besuchten Übergängen werden folgende Agenten begünstigt, andere Übergänge zu wählen und somit andere Lösung zu erzeugen. Dies vermindert die Überlagerung von gleichen Lösungen, welche aufgrund der Updates nur mit den besten Lösungen unerwünscht wird\cite{dorigo1997ant}. Die zweite Updateregel, das Offline Pheromon Update wird wie bei MMAS mit dem besten Pfad insgesamt oder dem besten Pfad der Iteration durchgeführt. Die Formel ist nur leicht abgeändert:\\\\
-\large
-$T_{xy}  = \left\{
+Das Ziel des lokalen Updates ist die Erweiterung der Suche in einer Iteration. Durch das Vermindern der Konzentration an bereits besuchten Übergängen werden folgende Agenten begünstigt, andere Übergänge zu wählen und somit andere Lösung zu erzeugen. Dies vermindert die Überlagerung von gleichen Lösungen, welche aufgrund der Updates nur mit den besten Lösungen unerwünscht wird\cite{dorigo1997ant}. Die zweite Updateregel, das Offline Pheromon Update wird wie bei MMAS mit dem besten Pfad insgesamt oder dem besten Pfad der Iteration durchgeführt. Die Formel ist nur leicht abgeändert: \\\\
+
+\begin{large}
+  $T_{xy}  = \left\{
   \begin{array}{ll}
-  $(1-p)\cdot T_{xy}+p\cdot \Delta T_{xy}$ & \normalsize \textrm{wenn Übergang auf dem besten Pfad} \\
-  $T_{xy}$ & \, \normalsize \textrm{sonst} \\
+  (1-p)\cdot T_{xy}+p\cdot \Delta T_{xy} & \normalsize \textrm{wenn Übergang auf dem besten Pfad} \\
+  T_{xy} & \, \normalsize \textrm{sonst} \\
   \end{array}
-\right. $
-\normalsize\\\\
+\right. $  
+\end{large}
+
+
 Ein weiterer Unterschied ist die Nutzung einer pseudorandomisierten Auswahl. Ist die Wahrscheinlichkeit einen Pfad zu wählen über einem gewählten Schwellwert, so wird der Agent definitiv diesen Pfad wählen. Durch die Abnutzung der besuchten Pfade kann dies nun genutzt werden, um die Suche zielgerichteter zu gestalten, ohne die anderen Pfade komplett auszuschließen\cite{gambardella1996solving}.\\
 
 Schritte der grundsätzlichen Durchführung von ACO:
@@ -156,7 +165,7 @@ Im Artificial Bee Colony (ABC) Algorithmus gibt es drei Gruppen an Bienen:
 \end{enumerate} 
 Die Position einer Futterquelle repräsentiert eine mögliche Lösung des Optimierungsproblems, die Effektivität der Futterquelle die damit verbundene Fitness.
 Jede beschäftige Biene ist mit einer Lösung verknüpft. Das heißt, es gibt gleich viele beschäftigte Bienen wie Futterquellen.\cite{ pham2005bees} Ist eine Futterquelle erschöpft, so werden die damit verknüpften beschäftigten Bienen zu betrachtenden Bienen. Dies wird im Algorithmus durch einen Parameter $limit$ umgesetzt. Für jede Lösung wird eine Versuchsanzahl pro Iteration hochgezählt, erreicht diese den $limit$-Wert wird die Lösung nichtmehr weiter besucht und die Agenten suchen sich neue Lösungen.
- \\
+\\
 Der Algorithmus beginnt mit der Initialisierungphase. Es werden zufällige Futterquellen nach folgender Formel initialisiert: \\\\\large
 $x_{m,i}=l_i+r \cdot (u_i-l_i)$
 \normalsize
