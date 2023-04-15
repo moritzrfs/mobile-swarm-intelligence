@@ -21,3 +21,8 @@ Instruktions-Datei
 uploadfile
 Instruktions-Dateien
 Grove
+populationsbasierte
+populationsbasierten
+Explorationsstrategie
+Schwarmoptimierungsalgorithmen
+
