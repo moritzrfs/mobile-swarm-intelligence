@@ -1,0 +1,39 @@
+% LTeX: language=de-DE
+In diesem Kapitel werden die Inhalte der vorherigen Abschnitte zusammengefügt und somit der Roboter zum Fahren des Pfades gebracht. Der Roboter bekommt dafür von dem Algorithmus aus Kapitel \ref{ch:anwendungAlgo} den optimalen Pfad des Durchlaufs geliefert und soll diesem folgen, um das Ziel zu erreichen.\\\\
+Für das Fahren des Roboters von einem Punkt zu dem nächsten muss zunächst die Steigung zwischen zwei Punkten mittels der Steigungsformel berechnet werden:
+
+    \[m = \frac{\Delta y}{\Delta x} = \frac{y_2 - y_1}{x_2 - x_1}\]
+
+Mit der Steigung ist definiert wie weit sich der Roboter drehen muss, um auf dem richtigen Pfad zu fahren. Für die Ermittlung der Distanz zwischen zwei Punkte wird die folgende Formel verwendet:
+
+    \[\sqrt{(x2 - x1)^2 + (y2 -y1)^2}\]
+    
+Allerdings muss zuerst verglichen werden, die aktuelle Position der nächsten Position gleicht. Falls das der Fall ist, wird diese Koordinate übersprungen und direkt mit dem nächsten Punkt fortgefahren. \\\\
+Nachdem diese Operationen für die zwei aktuell betrachteten Punkte durchgeführt sind können neue Instruktionen der JSON Datei hinzugefügt werden, die später per \glqq upload\grqq{} Methode aus Kapitel \ref{ch:einplatinen} auf den Raspberry Pi hochgeladen wird. Diese Vorgehensweise wird iterativ für jeden der Punkte durchgeführt und im Anschluss kann der Roboter per post Methode \glqq /start\grqq{} gestartet werden (siehe Abbildung \ref{drive}).
+    \begin{minted}{python}
+def drive_path(path, upload_url, start_url, headers):
+    for i in range(len(path)-1):
+        current_pos = path[i]
+        next_pos = path[i+1]
+        if current_pos != next_pos:
+            # berechne Steigung
+            m = (next_pos[1] - current_pos[1])/(next_pos[0] - current_pos[0])   
+
+            #drehe roboter um die Gradzahl der Steigung * 10
+            instructions["instructions"].append({"action": "turn_right", "degree": m*10})
+            
+            #Länge der Stecke berechnen
+            distance = math.sqrt((next_pos[0] - current_pos[0])**2 + (next_pos[1] - current_pos[1])**2)
+            instructions["instructions"].append({"action": "drive_straight", "seconds": distance})
+
+    with open('instruc.json', 'w') as f:
+        json.dump(instructions, f)
+
+    # Anfrage bauen und senden
+    files = [('file', open('instruc.json', 'rb'))]
+    upload_response = requests.post(upload_url, headers=headers, files=files)
+    response = requests.post(start_url, headers=headers)
+        \end{minted}
+        \vspace*{-3mm}
+        \captionof{listing}{drive\_path Funktion \label{drive}}
+        \vspace*{3mm}
