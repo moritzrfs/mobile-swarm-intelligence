@@ -1,6 +1,6 @@
 % LTeX: language=de-DE
 \section{Implementierung in Python}
-Nachdem in \autoref{sec:comparison} evaluiert wurde, welcher Algorithmus für unsere Problematik am besten angewendet werden kann wurde die Implementierung des \glqq Bees Algorithms\grqq{} in der Programmiersprache Python programmiert.\\\\
+Nachdem in \autoref{sec:comparison} evaluiert wurde, welcher Algorithmus für die vorliegende Problematik am besten angewendet werden kann, wurde die Implementierung des \glqq Bees Algorithms\grqq{} in der Programmiersprache Python umgesetzt.\\\\
 Zu Beginn des Programmes musste die Karte mit den dazugehörigen Hindernissen initialisiert werden. Die Karte wurde in Form eines 2D-Koordinatensystems umgesetzt (siehe Abbildung \ref{fig:map_init}).
 
 \begin{figure}[h]
@@ -12,7 +12,8 @@ Zu Beginn des Programmes musste die Karte mit den dazugehörigen Hindernissen in
 
 Die Menge, in der sich der Roboter bewegen darf, ergibt sich aus der Gesamtzahl der Karte \emph{K} und den Hindernissen innerhalb der Karte \emph{H}:
 \[K\_frei = K - H\]
-Als nächstes wird, wie bereits in \autoref{ch:algo} beschrieben, die Population initialisiert. Für unseren Fall wird der Bienen Algorithmus nicht verwendet um einen optimalen Punkt zu finden, sogar um den optimalen Pfad zu finden. Dabei bildet jede Biene einen Pfad ab. Die Pfade bestehen aus \emph{k} vielen Punkten in Form eines Tuples \emph{(x,y)}. Jeder Pfad wird mit den Koordinaten \emph{(0,0)} initialisiert und muss am Ende am Ziel \emph{(16,16)} ankommen. Die Funktion iteriert von \emph{i = 1} bis \emph{k}, da der erste Punkt des Pfades bereits gesetzt ist:
+
+Als Nächstes wird, wie bereits in \autoref{ch:algo} beschrieben, die Population initialisiert. Für unseren Fall wird der Bienen Algorithmus nicht verwendet, um einen optimalen Punkt zu finden, sondern um den optimalen Pfad zu finden. Dabei bildet jede Biene einen Pfad ab. Die Pfade bestehen aus \emph{k} vielen Punkten in Form eines Tupels \emph{(x,y)}. Jeder Pfad wird mit den Koordinaten \emph{(0,0)} initialisiert und muss am Ende am Ziel \emph{(16,16)} ankommen. Die Funktion iteriert von \emph{i = 1} bis \emph{k}, da der erste Punkt des Pfades bereits gesetzt ist:
 
 \begin{minted}{python}
 def init_population():
@@ -50,12 +51,13 @@ def init_population():
 \captionof{listing}{init\_population Funktion \label{fig:init}}
 \vspace*{3mm}
 
-Im Quellcode der Code Darstellung \ref{fig:init} benutzt die stetige Gleichverteilung oder auch uniform distribution function genannt. Die Gleichverteilungsfunktion ist eine Wahrscheinlichkeitsverteilungsfunktion, die angibt, wie wahrscheinlich es ist, dass eine Zufallsvariable einen bestimmten Wert innerhalb eines bestimmten Intervalls annimmt.
+Im Code, der in der Code Darstellung \ref{fig:init} gezeigt wird, wird die stetige Gleichverteilung, auch uniform distribution function genannt, verwendet. Die Gleichverteilungsfunktion ist eine Wahrscheinlichkeitsverteilungsfunktion, die angibt, wie wahrscheinlich es ist, dass eine Zufallsvariable einen bestimmten Wert innerhalb eines bestimmten Intervalls annimmt.
 Die Gleichverteilungsfunktion ordnet jedem Wert innerhalb des Intervalls die gleiche Wahrscheinlichkeit zu. Das bedeutet, dass jede Zahl innerhalb des Intervalls mit gleicher Wahrscheinlichkeit gezogen wird.\\
-Die Formel für die Stetige Gleichverteilung lautet:
+Die Formel für die stetige Gleichverteilung lautet:
 \[f(x) = 1/(b-a),\: a \leq x \leq b\]
 \[f(x) = 0,\:x < a \:oder\: x > b\]
-Dabei ist \emph{a} der untere und \emph{b} der obere Endpunkt des Intervalls \cite{casella2021statistical}. Im Falle dieser Bienen Algorithmus Implementierung wird die Stetige Gleichverteilungsfunktion verwendet, um zufällige Pfadpunkte in den Grenzen der Karte zu erstellen.\\
+
+Dabei ist \emph{a} der untere und \emph{b} der obere Endpunkt des Intervalls \cite{casella2021statistical}. Im Falle dieser Bienen Algorithmus Implementierung wird die stetige Gleichverteilungsfunktion verwendet, um zufällige Pfadpunkte in den Grenzen der Karte zu erstellen.\\
 Nach der Erstellung der Punkte muss überprüft werden, ob der Punkt valide ist. Ein Punkt innerhalb eines Pfades \emph{P} wird als valide angesehen, wenn die folgenden Bedingungen erfüllt sind \cite{Darwish2018}:
 
 \[1. \quad P \cap H = \emptyset \quad\]
@@ -95,10 +97,11 @@ def intersects(point1, point2, obstacle):
 \captionof{listing}{Überprüfen, ob Schnittpunkt existiert}
 \vspace*{3mm}
 
-Aus diesen zwei Funktion setzt sich die Funktion \emph{is\_feasible()} zusammen, die in der Methode \emph{init\_population()} verwendet wird. Ein neuer Punkt wird also nur hinzugefügt, falls \emph{is\_feasible} wahr ist. Eine Ausnahme die existiert entsteht bei dem Anfügen des letzten Punktes \emph{(16,16)}. Es kann passieren, dass der letzte generierte Punkt des Pfades keine valide Verbindung zu dem Zielpunkt herstellen kann, da immer ein Hindernis im Weg ist. In diesem Falle wird der letzte Punkt des Pfades wieder ersetzt durch einen neuen Punkt. Im Anschluss wird überprüft, ob dieser Punkt nun auf gültigem Wege zum Ziel kommt. Falls dies nach 10 Versuchen nicht funktioniert wird der Pfad komplett wegeworfen und neu initialisiert. Diese Variante stellte sich nach vermehrten Überprüfungen als effizientesten Weg heraus.\\
+Aus diesen zwei Funktionen setzt sich die Funktion \emph{is\_feasible()} zusammen, die in der Methode \emph{init\_population()} verwendet wird. Ein neuer Punkt wird also nur hinzugefügt, falls \emph{is\_feasible} wahr ist. Eine Ausnahme die existiert entsteht bei dem Anfügen des letzten Punktes \emph{(16,16)}. Es ist möglich, dass der letzte generierte Punkt des Pfades keine valide Verbindung zu dem Zielpunkt herstellen kann, da immer ein Hindernis im Weg ist. In diesem Falle wird der letzte Punkt des Pfades wieder ersetzt durch einen neuen Punkt. Im Anschluss wird überprüft, ob dieser Punkt auf gültigen Weg zum Ziel kommt. Falls dies nach 10 Versuchen nicht funktioniert, wird der Pfad verworfen und neu initialisiert. Diese Variante stellte sich nach vermehrten Überprüfungen als die effizienteste Möglichkeit heraus.\\
 
-Für die weiteren Schritte des Bienen Algorithmus benötigen wir die Bewertungsfunktion. Die Bewertung eines Pfades wird mithilfe des Euklidischen Abstands berechnet:
+Für die weiteren Schritte des Bienen-Algorithmus wird eine Bewertungsfunktion benötigt. Die Bewertung eines Pfades wird mithilfe des Euklidischen Abstands berechnet:
 \[f = \sum_{i=1}^{n-1} \sqrt{(x_{i+1} - x_i)^2 + (y_{i+1} - y_i)^2}\]
+
 Der Euklidische Abstand berechnet den Abstand zwischen zwei Punkten innerhalb einer Ebene \cite{Friedrich2019}. Dies wird für jeden Punkt durchgeführt und aufsummiert. Die passende Funktion dazu sieht wie folgt aus:
 
 \begin{minted}{python}
@@ -120,7 +123,7 @@ Der Euklidische Abstand berechnet den Abstand zwischen zwei Punkten innerhalb ei
 \captionof{listing}{Evaluierungsfunktion}
 \vspace*{3mm}
 
-In Kombination mit der Evaluierungsfunktion wird die Lokale Suche des Bienen Algorithmus angewandt, um in einer bestimmten Umgebung, auch Nachbarschaft genannt, zu suchen. Dafür kann die Größe der Nachbarschaft \emph{ngh} beliebig initialisiert werden. Nachfolgend wird für jeden Punkt des Pfades der übergeben wird, außer für Start und Ziel, ein neuer Punkt mittels Stetiger Gleichverteilungsfunktion in einer bestimmten Begrenzung erstellt. Dabei muss allerdings sichergestellt werden, dass ein valider Punkt dem Pfad hinzugefügt wird. Falls der Punkt ungültig ist wird ein neuer Punkt erstellt. Zum Schluss der Funktion wird überprüft ob die Fitness des neuen Pfades höher ist als die des alten Pfades. Wenn das der Fall ist wird der Pfad akualisiert. Auf diese Weise versucht man die bestehenden Pfade zu optimieren.   
+In Kombination mit der Evaluierungsfunktion wird die Lokale Suche des Bienen-Algorithmus angewandt, um in einer bestimmten Umgebung, auch Nachbarschaft genannt, zu suchen. Dafür kann die Größe der Nachbarschaft \emph{ngh} beliebig initialisiert werden. Nachfolgend wird für jeden Punkt des Pfades der übergeben wird, außer für Start und Ziel, ein neuer Punkt mithilfe der stetigen Gleichverteilungsfunktion in einer bestimmten Begrenzung erstellt. Dabei muss allerdings sichergestellt werden, dass ein valider Punkt dem Pfad hinzugefügt wird. Falls der Punkt ungültig ist, wird ein neuer Punkt erstellt. Zum Schluss der Funktion wird überprüft, ob die Fitness des neuen Pfades höher ist als die des alten Pfades. Ist dies der Fall, wird der Pfad aktualisiert. Auf diese Weise wird versucht, die bestehenden Pfade zu optimieren.   
 
 \begin{minted}{python}
     def local_search(solution, fitness):
@@ -144,10 +147,10 @@ In Kombination mit der Evaluierungsfunktion wird die Lokale Suche des Bienen Alg
         return solution
 \end{minted}
 \vspace*{-3mm}
-\captionof{listing}{Lokale Suche des Bienen Algorithmus}
+\captionof{listing}{Lokale Suche des Bienen-Algorithmus}
 \vspace*{3mm}
 
-Neben der lokalen Suche findet eine globale Suche statt. Hier werden erneut randomisiert eine Menge an Pfaden erstellt und per Evaluationsfunktion bewertet. Dieses Mal wird allerdings nicht die stetige Gleichverteilungsfunktion verwendet, sondern wählt man eine zufällige Stelle im Pfad aus und generiert dort eine zufällige Änderung bewirkt. Diese neu-erstellten Pfade wird im Anschluss zurückgegeben und zur Gesamtmenge der gefunden Pfade hinzugefügt.
+Neben der lokalen Suche findet eine globale Suche statt. Hier werden erneut randomisiert eine Menge an Pfaden erstellt und per Evaluationsfunktion bewertet. Dieses Mal wird allerdings nicht die stetige Gleichverteilungsfunktion verwendet. Stattdessen wird eine zufällige Stelle im Pfad ausgewählt und eine zufällige Änderung generiert. Diese neu-erstellten Pfade werden im Anschluss zurückgegeben und zur Gesamtmenge der gefunden Pfade hinzugefügt.
 
 \begin{minted}{python}
     def generate_new_solutions(solutions, best_solution):
@@ -172,10 +175,10 @@ Neben der lokalen Suche findet eine globale Suche statt. Hier werden erneut rand
         return new_solutions
 \end{minted}
 \vspace*{-3mm}
-\captionof{listing}{Globale Suche des Bienen Algorithmus}
+\captionof{listing}{Globale Suche des Bienen-Algorithmus}
 \vspace*{3mm}
 
-Zuletzt müssen diese Methoden auf die Weise, wie in \autoref{ch:algo} erläutert wurde, in einer Funktion zusammengefügt werden. Diese Funktion nimmt als Parameter die Anzahl an Kundschafter Bienen, die auch als Anzahl der Iterationen gesehen werden kann, und sieht wie folgt aus:
+Zuletzt müssen diese Methoden auf die Weise, wie in \autoref{ch:algo} erläutert wurde, in einer Funktion zusammengefügt werden. Diese Funktion nimmt als Parameter die Anzahl an Kundschafter Bienen, die auch als Anzahl der Iterationen gesehen werden kann, und wird wie folgt beschrieben:
 
 \begin{minted}{python}
     def bees_algorithm(num_scouts):
@@ -210,11 +213,11 @@ Zuletzt müssen diese Methoden auf die Weise, wie in \autoref{ch:algo} erläuter
      return solutions, best_solution
 \end{minted}
 \vspace*{-3mm}
-\captionof{listing}{Gesamtheit des Bienen Algorithmus}
+\captionof{listing}{Gesamtheit des Bienen-Algorithmus}
 \vspace*{3mm}
 
-Zu Beginn des Algorithmus wird die Population initialisiert auf die Anzahl der Kundschafter Bienen. Anschließend wird für jeden Pfad die lokale Suche durchgeführt, die Fitness berechnet und die beste Lösung aktualisiert. Zudem wird die Globale Suche angewandt und das Array aufsteigend anhand der Fitness-Werte sortiert. Die neu-generierten Fitness-Werte werden nun an den Index der Anzahl von Kundschafter Bienen des Arrays angehängt, damit die Menge der Pfade nicht zu groß wird und somit die Funktion effizienter ist.  
-In dieser Implementierung wurde als Stoppkriterium die Menge an Iterationen gewählt, jedoch lässt sich dieses beliebig wählen. Ein weiteres sinnvolles Stoppkriterium wäre beispielsweise ein bestimmter Fitness-Wert. \\\\
+Zu Beginn des Algorithmus wird die Population auf die Anzahl der Kundschafter Bienen initialisiert. Anschließend wird für jeden Pfad die lokale Suche durchgeführt, die Fitness berechnet und die beste Lösung aktualisiert. Zudem wird die globale Suche angewandt und das Array aufsteigend anhand der Fitness-Werte sortiert. Die neu-generierten Fitness-Werte werden nun an den Index der Anzahl von Kundschafter Bienen des Arrays angehängt, damit die Menge der Pfade nicht zu groß wird und somit die Funktion effizienter ist.  
+In dieser Implementierung wurde als Stopp-Kriterium die Menge an Iterationen gewählt, jedoch lässt sich dieses beliebig wählen. Ein weiteres sinnvolles Stopp-Kriterium wäre beispielsweise ein bestimmter Fitness-Wert. \\\\
 Nach 30 Iterationen hat der Bienen Algorithmus den folgenden Pfad errechnet:
 \begin{figure}[H]
     \centering
@@ -223,7 +226,7 @@ Nach 30 Iterationen hat der Bienen Algorithmus den folgenden Pfad errechnet:
     \label{fig:schnellster}
 \end{figure}
 
-Zur Veranschaulichung, welche Wege der Bienen Algorithmus verwendet hat, wurde die Gesamtheit aller Pfade graphisch dargestellt:
+Zur Veranschaulichung, welche Wege der Bienen Algorithmus verwendet hat, wurde die Gesamtheit aller Pfade grafisch dargestellt:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{passende_iterationen.jpg}
@@ -231,4 +234,4 @@ Zur Veranschaulichung, welche Wege der Bienen Algorithmus verwendet hat, wurde d
     \label{fig:iterationen}
 \end{figure}
 
-In \autoref{fig:iterationen} ist die Funktionsweise des Bienen Algorithmus zu erkennen. Verschiedene Punkte mittels der Lokalen Suche wurden ausgetestet, um den bestmöglichen Weg zu finden.
+In \autoref{fig:iterationen} ist die Funktionsweise des Bienen-Algorithmus zu erkennen. Verschiedene Punkte mittels der Lokalen Suche wurden getestet, um den bestmöglichen Weg zu finden.
