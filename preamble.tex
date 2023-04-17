@@ -1,4 +1,4 @@
-\usepackage[ngerman]{babel}
+\usepackage[ngerman, english]{babel}
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{subcaption}
@@ -12,6 +12,10 @@
 \newdateformat{gerFormat}{\THEDAY. \monthname[\THEMONTH] \THEYEAR}
 \usepackage{minted}
 \usepackage{hyperref}
+\hypersetup{
+    colorlinks=false, % Hyperlinks nicht farbig 
+    pdfborder={0 0 0}, % Unsichtbare Rahmen für Verweise und Zitationen
+}
 \graphicspath{{assets/images/}}
 \usepackage[backend=biber]{biblatex}
 \addbibresource{literature/moritz.bib}
