@@ -1,14 +1,18 @@
 \documentclass[12pt, a4paper]{report}
 \input{preamble}
 \begin{document}
+\selectlanguage{ngerman}
 \pagenumbering{roman}
 \input{titlepage}
 \input{etc/eigenleistung}
+\include{etc/beitraege}
 \tableofcontents
 \listoffigures
 \listoftables
 \listoflistings
+\selectlanguage{english}
 \input{chapters/abstract}
+\selectlanguage{ngerman}
 \chapter{Einleitung}
 \pagenumbering{arabic}
 \input{chapters/einleitung}
