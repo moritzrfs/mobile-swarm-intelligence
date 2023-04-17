@@ -1,6 +1,6 @@
 % LTeX: language=de-DE
 \section{Partikelschwarmoptimierung}
-Die Partikelschwarmoptimierung/particle swarm optimization (PSO) wurde zuerst von Dr. Kennedy und Dr. Eberhart in 1995 vorgestellt\cite{kennedy1942particle}.
+Die Partikelschwarmoptimierung (PSO) wurde zuerst von Dr. Kennedy und Dr. Eberhart in 1995 vorgestellt\cite{kennedy1942particle}.
 Sie ist inspiriert vom Verhalten von Vogelschwärmen und Fischschulen. Jeder Teil wird als Partikel bezeichnet, die Gesamtheit als Schwarm.
 \\ Die Partikel werden gleichverteilt über dem Suchbereich verteilt. Sie erhalten eine zufällige Startgeschwindigkeit. 
 Der Suchraum hat D Dimensionen und N ist die Menge an Partikeln. Nun hat das i-te Partikel die Position $X_i=(x_{i1},x_{i2},x_{i3},...\ ...x_{iD})$
@@ -30,12 +30,12 @@ Schritte der gründsätzlichen Durchführung der Partikelschwarmoptimierung:
 \end{enumerate}
 Die Partikelschwarmoptimierung kann auf unterschiedliche Weisen umgesetzt werden.
 Das Abbruchkriterium kann unterschiedlich gewählt werden. Standardmäßig werden hier entweder die Anzahl der Iterationen im Vorhinein festgelegt oder der Algorithmus endet nach einer zu geringen Änderung nach mehreren Iterationen. 
-Um die Konvergenz zu beschleunigen, kann der $P_{ibest}$-Wert anstatt des persönlich besten Wertes den besten Wert eines bestimmten Umfelds speichern.
-Der Wahl der Fitnessevaluierung kommt bei PSO ein großer Wert zukommen. Eine gut gewählte Fitnessfunktion kann die Konvergenz stark beschleunigen und somit den benötigten Rechenaufwand minimieren.\\
+Um die Konvergenz zu beschleunigen, kann der $P_{ibest}$-Wert anstatt des persönlich besten Wertes den optimalen Wert eines bestimmten Umfelds speichern.
+Der Wahl der Fitnessevaluierung kommt bei PSO ein großer Wert zu. Eine gut gewählte Fitnessfunktion kann die Konvergenz stark beschleunigen und somit den benötigten Rechenaufwand minimieren.\\
 PSO ist einfach zu implementieren und hat nur wenige Parameter die gesetzt werden müssen. Es braucht keine skalierten Daten und ist einfach zu parallelisieren \cite{poli2007particle}.
 Eine Umsetzung mit einem großen kognitiven Gewicht $c_1$ führt zu einer ausgiebigen Exploration, während ein großes soziales Gewicht $c_2$ zu einer schnellen Konvergenz führt. Daher können diese Parameter dynamisch gewählt werden, um anfangs den gesamten Suchraum zu erforschen und später trotzdem schnell zu konvergieren \cite{suganthan1999particle}. 
-Umsetzungen von PSO lassen sich in zwei Kategorien einteilen: synchrone (S-PSO) und asynchone (A-PSO) Partikelschwarmoptimierung. Im ursprünglichen, asynchronen PSO wurden die Geschwindigkeiten und Positionen aller Partikel gelichzeitig am Ende jeder Iteration verändert. Im asynchronen PSO wird die Geschwindigkeit und Position der Partikel dauerhaft basieren auf den verfügbaren Informationen aktualisiert.  S-PSO erreicht eine höhere Ausnutzung, während A-PSO eine besser Exploration, sowie eine schneller Konvergenz liefert. \cite{carlisle2001g}, \cite{ab2014synchronous}
-PSO teilt viele Merkmale mit genetischen Algorithmen. Beide basieren auf einer zufälligen Initialisierung ihrer Agenten und entwickeln diese Anhand einer Fitnessevaluierung weiter. Allerdings erfolgt der Informationsaustausch grundlegend unterschiedlich. Während bei einem genetischen Algorithmus alle Agenten untereinander Informationen austauschen, erfolgt dies bei einer PSO nur in eine Richtung, vom besten Partikel zu allen anderen.\\
+Umsetzungen von PSO lassen sich in zwei Kategorien einteilen: synchrone (S-PSO) und asynchone (A-PSO) Partikelschwarmoptimierung. Im ursprünglichen, asynchronen PSO wurden die Geschwindigkeiten und Positionen aller Partikel gelichzeitig am Ende jeder Iteration verändert. Im asynchronen PSO wird die Geschwindigkeit und Position der Partikel dauerhaft basierend auf den verfügbaren Informationen aktualisiert.  S-PSO erreicht eine höhere Ausnutzung, während A-PSO eine bessere Exploration, sowie eine schneller Konvergenz liefert. \cite{carlisle2001g}, \cite{ab2014synchronous}
+PSO teilt viele Merkmale mit genetischen Algorithmen. Beide basieren auf einer zufälligen Initialisierung ihrer Agenten und entwickeln diese anhand einer Fitnessevaluierung weiter. Allerdings erfolgt der Informationsaustausch grundlegend unterschiedlich. Während bei einem genetischen Algorithmus alle Agenten untereinander Informationen austauschen, erfolgt dies bei einer PSO nur in eine Richtung, vom besten Partikel zu allen anderen.\\
 
 \begin{figure}
   \centering
@@ -47,11 +47,11 @@ PSO teilt viele Merkmale mit genetischen Algorithmen. Beide basieren auf einer z
 \section{Ameisen Algorithmen}
 Ameisenalgorithmen sind von der Futtersuche der Ameisen abgeleitet. Ameisen kommunizieren über Stigmergie. Das heißt,sie kommunizieren nur indirekt indem sie ihre lokale Umwelt verändern. Jede Ameise scheidet auf ihrem Weg Pheromone aus, welche mit der Zeit verdunsten. 
 Folgende Ameisen wählen wahrscheinlicher einen Weg mit größerer Pheromonkonzentration. 
-Existieren nun zwei unterschiedlich lange Wege mit gleicher Pheromonkonzentration, entscheiden sich etwa gleich viele Ameisen für beide Wege. 
+Existieren nun zwei unterschiedlich lange Wege mit gleicher Pheromonkonzentration, entscheiden sich etwa gleich viele Ameisen für beide Wege\cite{dorigo2000ant}.
 Da die Ameisen auf dem kürzeren Weg in gleicher Zeit allerdings öfter laufen, steigt hier die Konzentration schneller als auf dem längeren Weg. 
 Infolgedessen laufen immer mehr Ameisen den kürzeren Weg und es bildet sich eine Ameisenstraße.\\
 Es gibt viele verschiedene Umsetzungen der Ameisenalgorithmen. Der erste Ansatz wurde von Marco Dorigo 1991 vorgestellt\cite{Dorigo1991AntSA} und 1996 nochmal verbessert\cite{484436}.
-Sein Ansatz namens \emph{Ant System} lieferte Grundlagen welche er 1997 in einem neuen System namens \emph{Ant Colony System} weiter verbesserte\cite{585892}. In 2000 veröffentlicht Stützle Hoos einen weiteren ACO Algorithmus namens \emph{MAX-MIN Ant System (MMAS)} \cite{STUTZLE2000889}. Es exisitieren noch einige weiter ACO Algortihmen, wie das \emph{best-worst Ant System (BWAS)}\cite{cordon2000new} oder das \emph{Hyper-Cube Ant System}\cite{blum2004hyper}. Diese sind allerdings nicht so verbreitet und werden daher im Folgenden nicht weiter behandelt. \\
+Sein Ansatz namens \emph{Ant System} lieferte Grundlagen welche er 1997 in einem neuen System namens \emph{Ant Colony System} weiter verbesserte\cite{585892}. In 2000 veröffentlicht Stützle Hoos einen weiteren ACO Algorithmus namens \emph{MAX-MIN Ant System (MMAS)} \cite{STUTZLE2000889}. Es exisitieren noch einige weiter ACO Algortihmen, wie das \emph{best-worst Ant System (BWAS)}\cite{cordon2000new} oder das \emph{Hyper-Cube Ant System}\cite{blum2004hyper}. Diese sind allerdings nicht so verbreitet und werden daher nicht weiter behandelt. \\
 Im Folgenden werden wir erst auf AS eingehen und dann die Unterschiede zu MMAS und ACS erklären.
 \subsubsection{Ant System}
 Jede Ameise bewegt sich von Punkt x zu Punkt y mit folgender Wahrscheinlichkeit: \\
@@ -96,9 +96,9 @@ $\Delta T_{xy}^k = \left\{
     \item $L_k$: Länge des Pfades der Ameise
 \end{itemize}
 
-Die Wahl der Pheromonverdunstung p hat einen großen Einfluss auf den Erfolg des Algorithmus. Er bestimmt Erkundung und Ausnutzung der Agenten. Ein zu hoher Wert führt zu zuviel Erkundung und das Verlorengehen von Ameisen. Ein zu niedriger Wert schränkt die Erkundung zusehr ein und der optimale Pfad wird unter Umständen nicht gefunden.\\
+Die Wahl der Pheromonverdunstung p hat einen großen Einfluss auf den Erfolg des Algorithmus. Er bestimmt Erkundung und Ausnutzung der Agenten. Ein zu hoher Wert führt zu zuviel Erkundung und das Verlorengehen von Ameisen. Ein zu niedriger Wert schränkt die Erkundung zu sehr ein und der optimale Pfad wird unter Umständen nicht gefunden.\\
 \subsubsection{MAX-MIN Ant System}
-Das MAX-MIN Ant System(MMAS) wurde eingeführt um die Performance des Systems auf großen Daten zu verbessern. Gegenüber AS gibt es zwei große Unterschiede. Es gibt es einen maximalen sowie einen minimalen Wert für die Pheromonkonzentration auf einem Übergang, $T_{xy}$. Die minimal und maximal Werte $T_{min}$ und $T_{max}$ werden für ein Problem spezifisch empirisch gewählt\cite{socha2002max}. Allerdings gibt es dafür Richtlinine die bei einer guten Wahl helfen kann\cite{STUTZLE2000889}.\\
+Das MAX-MIN Ant System(MMAS) wurde eingeführt um die Performance des Systems auf großen Daten zu verbessern. Gegenüber AS gibt es zwei große Unterschiede. Es gibt es einen maximalen sowie einen minimalen Wert für die Pheromonkonzentration auf einem Übergang, $T_{xy}$. Die minimal und maximal Werte $T_{min}$ und $T_{max}$ werden für ein Problem spezifisch empirisch gewählt\cite{socha2002max}. Allerdings gibt es dafür Richtlinien die bei einer guten Wahl helfen kann\cite{STUTZLE2000889}.\\
 Bei MMAS kann außerdem nur der beste Agent die Pheromone verändern.\\
 $\Delta T_{xy}$ wird berechnet mit:\\
 \large
@@ -121,7 +121,7 @@ Ant Colony System (ACS) bringt mehrere kleinere Verbesserungen mit sich. Die wic
   \item $\varphi$: Pheromon-Verdunstungskoeefizient, Wert zwischen 0 und 1
   \item $T_0$: Initialer Wert des Pheromons
 \end{itemize}
-Das Ziel des lokalen Updates ist die Erweiterung der Suche in einer Iteration. Durch das Vermindern der Konzentration an bereits besuchten Übergängen werden folgende Agenten begünstigt, andere Übergänge zu wählen und somit andere Lösung zu erzeugen. Dies vermindert die Überlagerung von gleichen Lösungen, welche aufgrund der Updates nur mit den besten Lösungen unerwünscht wird\cite{dorigo1997ant}. Die zweite Updateregel, das Offline Pheromon Update wird wie bei MMAS mit dem besten Pfad insgesamt oder dem besten Pfad der Iteration durchgeführt. Die Formel ist nur leicht abgeändert: \\\\
+Das Ziel des lokalen Updates ist die Erweiterung der Suche in einer Iteration. Durch das Vermindern der Konzentration an bereits besuchten Übergängen werden folgende Agenten begünstigt, andere Übergänge zu wählen und somit andere Lösung zu erzeugen. Dies vermindert die Überlagerung von gleichen Lösungen, welche aufgrund der Updates nur mit den besten Lösungen unerwünscht ist\cite{dorigo1997ant}. Die zweite Updateregel, das Offline Pheromon Update wird wie bei MMAS mit dem besten Pfad insgesamt oder dem besten Pfad der Iteration durchgeführt. Die Formel ist nur leicht abgeändert: \\\\
 
 \begin{large}
   $T_{xy}  = \left\{
@@ -155,7 +155,7 @@ Schritte der grundsätzlichen Durchführung von ACO:
 Der Bienen Algorithmus ist von der Futtersuche der Bienen abgeleitet.ABC wurde in 2005 von Karaboga vorgestellt\cite{karaboga2005idea}. Ein kleiner Teil des Bienenschwarms fungiert als Kundschafter für die Kolonie.
 Sie sind konstant zufällig auf der Futtersuche. Finden sie eine Futterquelle analysieren sie deren Effektivität und kehren zum Bienenstock zurück. Die Effektivität hängt von Faktoren wie der Menge, Entfernung und Zuckergehalt ab.\cite{PHAM2006454}
 Die Bienen, die eine effektive Futterquelle gefunden haben, führen nun einen sogenannten \emph{waggle dance} auf dem \emph{dance floor} aus \cite{Seeley+1995}. Damit gibt sie die Wegbeschreibung zur Futterquelle weiter.
-Unbeschäftigte Arbeiterbienen schauen auf dem dance floor nach Wegbeschreibungen. Umso effektiver die Futterquelle, umso länger der Tanz, daher werden auch mehr Arbeiterbienen diese ausnutzen.\cite{KARABOGA2009108} ABC ereicht gute Resultate für relativ niedrige Rechenaufwände \cite{karaboga2008performance}. Außerdem hat es nur sehr wenige Kontrollparameter die gewählt werden müssen.\\
+Unbeschäftigte Arbeiterbienen schauen auf dem dance floor nach Wegbeschreibungen. Umso effektiver die Futterquelle, desto länger der Tanz, daher werden auch mehr Arbeiterbienen diese ausnutzen.\cite{KARABOGA2009108} ABC ereicht gute Resultate für relativ niedrige Rechenaufwände \cite{karaboga2008performance}. Außerdem hat es nur sehr wenige Kontrollparameter die gewählt werden müssen.\\
 
 Im Artificial Bee Colony (ABC) Algorithmus gibt es drei Gruppen an Bienen:
 \begin{enumerate}
@@ -187,7 +187,7 @@ $v_{m,i}= x_{m,i}+\Phi _{m,i}( x_{m,i}- x_{k,i})$
 \end{itemize}
 
 Nun wird die Fitness von $v_{m}$ evaluiert, ist sie besser als $x_m$ ersetzt $v_m$ $x_m$ als Futterquelle.\\
-Nun folgt die Phase der Beschäftigten Bienen. Sie bekommen die Futterquellen der Beschäftigten Bienen sowie deren Fitnessevaluierung.  Nun wählen sie eine Futterquelle abhängig von folgender Wahrscheinlichkeit:\\\\ 
+Danach folgt die Phase der Beschäftigten Bienen. Sie bekommen die Futterquellen der Beschäftigten Bienen sowie deren Fitnessevaluierung.  Nun wählen sie eine Futterquelle abhängig von folgender Wahrscheinlichkeit:\\\\ 
 \large
 $p_i=\frac{f_i}{\Sigma^N_{n=0}f_n}$
 \normalsize
